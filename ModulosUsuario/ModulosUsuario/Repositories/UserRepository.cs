@@ -34,5 +34,21 @@ namespace ModulosUsuario.Repositories
             context.SaveChanges();
             return user;
         }
+
+        public User GetByLogin(string login)
+        {
+            return context.Users.Where(w => w.Login == login).FirstOrDefault();
+        }
+
+        public void DeleteUser(User user)
+        {
+            context.Remove(user);
+            context.SaveChanges();
+        }
+
+        public User GetById(int userId)
+        {
+            return context.Users.Find(userId);
+        }
     }
 }

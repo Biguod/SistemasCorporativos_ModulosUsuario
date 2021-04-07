@@ -22,14 +22,11 @@ namespace ModulosUsuario.Services
 
         public User CreateUser(User user)
         {
+            //Login não pode ser repetido
+            if (userRepository.GetByLogin(user.Login).UserId > 0)
+                return user; //throw exception aqui!!
 
-
-            //var useradresses = new Collection<AddressUser>();
-            //var address = new AddressUser { AddressId = 1, Street = "Saldanha", Number = "825", PostalCode = "80410151", StateId = 1, CityId = 1, District = "Centro" };
-            //useradresses.Add(address);
-            //var user = new User { Id = 2, Login = "testando", Senha = "Senha", Email = "b@b.com", Name = "Bigu", LastName = "Linha", BirthDate = DateTime.Now, CPF = "526648244", Addresses = useradresses };
-
-            user = new User { UserId = 0, Login = "testando", Password = "Senha", Email = "b@b.com", Name = "Bigu", LastName = "Linha", BirthDate = DateTime.Now, CPF = "526648244" };
+            //user = new User { UserId = 0, Login = "testando", Password = "Senha", Email = "b@b.com", Name = "Bigu", LastName = "Linha", BirthDate = DateTime.Now, CPF = "526648244" };
 
 
             userRepository.Create(user);
@@ -40,6 +37,14 @@ namespace ModulosUsuario.Services
         {
             userRepository.Update(user);
             return user;
+        }
+
+        public void DeleteUser(User user)
+        {
+            if (userRepository.GetById(user.UserId).UserId <= 0)
+                return; //throw exception aqui !!!
+
+            userRepository.DeleteUser(user);
         }
     }
 }

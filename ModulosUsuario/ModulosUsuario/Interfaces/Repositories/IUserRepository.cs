@@ -12,5 +12,11 @@ namespace ModulosUsuario.Interfaces.Repositories
         User Create(User user);
 
         User Update(User user);
+
+        User GetByLogin(string login);
+
+        User GetById(int userId);
+
+        void DeleteUser(User user);
     }
 }
