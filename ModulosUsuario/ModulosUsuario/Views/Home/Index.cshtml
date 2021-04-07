@@ -1,8 +1,48 @@
-﻿@{
+﻿@model ModulosUsuario.Models.User 
+@{
     ViewData["Title"] = "Home Page";
+
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.@DateTime.Now</p>
+
+    <h3>Cadastro de usuário</h3>
+    <hr />
+    <form asp-controller="User" asp-action="CreateUser" asp-antiforgery="true" method="post">
+        <div class="form-group">
+            <label asp-for="Login"></label>
+            <input asp-for="Login" class="form-control" placeholder="Informe o Login desejado" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" class="form-control" placeholder="Digite a senha" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" placeholder="Digite o e-mail" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" placeholder="Digite seu Nome" />
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" placeholder="Digite seu sobrenome" />
+        </div>
+        <div class="form-group">
+            <label asp-for="BirthDate"></label>
+            <input asp-for="BirthDate" class="form-control" placeholder="Informe sua data de nascimento" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CPF"></label>
+            <input asp-for="CPF" class="form-control" placeholder="Digite seu CPF" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone"></label>
+            <input asp-for="Phone" class="form-control" placeholder="Insira seu CELULAR ex: 41999999999" />
+        </div>
+        <input type="submit" value="Submit" />
+    </form>
+    
 </div>

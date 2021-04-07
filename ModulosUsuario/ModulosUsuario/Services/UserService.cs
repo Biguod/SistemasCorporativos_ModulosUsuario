@@ -23,7 +23,7 @@ namespace ModulosUsuario.Services
         public User CreateUser(User user)
         {
             //Login não pode ser repetido
-            if (userRepository.GetByLogin(user.Login).UserId > 0)
+            if (userRepository.GetByLogin(user.Login) != null)
                 return user; //throw exception aqui!!
 
             //user = new User { UserId = 0, Login = "testando", Password = "Senha", Email = "b@b.com", Name = "Bigu", LastName = "Linha", BirthDate = DateTime.Now, CPF = "526648244" };
