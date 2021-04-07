@@ -10,26 +10,43 @@ namespace ModulosUsuario.Models
     {
         [Key]
         public int UserId { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Login não pode ser vazio!")]
         public string Login { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Senha não pode ser vazia!")]
+        [Display(Name = "Senha")]
         public string Password { get; set; }
+
         [Required]
         [EmailAddress(ErrorMessage = "Endereço de email inválido!")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Nome não pode ser vazio!")]
+        [Display(Name = "Nome")]
         public string Name { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Sobrenome não pode ser vazio!")]
+        [Display(Name = "Sobrenome")]
         public string LastName { get; set; }
+
+        [Display(Name = "Data de Nascimento")]
         public DateTime? BirthDate { get; set; }
-        [Required]
-        [MinLength(9)]
-        [MaxLength(9)]
+
+        [Required(ErrorMessage = "CPF inválido!")]
+        [MinLength(11)]
+        [MaxLength(11)]
         [CPFValidator]
         public string CPF { get; set; }
+
+        [Required(ErrorMessage = "Número de celular não pode ser vazio!")]
+        [RegularExpression("^\\d{11}$", ErrorMessage = "Número de celular inválido!")]
+        [Display(Name = "Celular")]
+        public string Phone { get; set; }
+
         public ICollection<AddressUser> Addresses { get; set; }
-        //[RegularExpression("^\d{9}$", ErrorMessage = "Please enter valid phone no.")]
-        //public ICollection<PhoneUser> Phones { get; set; }
+        
     }
     public class CPFValidator : ValidationAttribute
     {

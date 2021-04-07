@@ -46,5 +46,18 @@ namespace ModulosUsuario.Services
 
             userRepository.DeleteUser(user);
         }
+
+        public User GetUserById(int userId)
+        {
+            return userRepository.GetById(userId);
+        }
+
+        //public User SetUserPermission(User user, int userPermission)
+        //{
+        //    if (userPermission != 1)
+        //        return user; //Throws exception
+        //    userRepository.Update(user);
+        //    return user;
+        //}
     }
 }

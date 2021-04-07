@@ -11,5 +11,7 @@ namespace ModulosUsuario.Interfaces.Services
         IEnumerable<User> GetUsers();
         User CreateUser(User user);
         User UpdateUser(User user);
+        void DeleteUser(User user);
+        User GetUserById(int userId);
     }
 }
