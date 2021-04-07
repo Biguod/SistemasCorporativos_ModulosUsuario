@@ -19,18 +19,27 @@ namespace ModulosUsuario.Controllers
 
         public IActionResult Index()
         {
-
-            userService.CreateUser(new User());
-
-            return View();
+            return RedirectToAction("CreateOrEdit", new User());
         }
 
         [HttpPost]
 
-        public User CreateUser(User user)
+        public ActionResult CreateOrEdit(User user)
         {
-            userService.CreateUser(user);
-            return user;
+            if (this.ModelState.IsValid)
+            {
+                user = userService.CreateUser(user);
+                return RedirectToAction("Index");
+            }
+
+            return View("Form", user);
+            
+        }
+        
+        public ActionResult CreateOrEdit(int id)
+        {
+            var user = new User(); //pegar do banco
+            return View("Form", user);
         }
     }
 }

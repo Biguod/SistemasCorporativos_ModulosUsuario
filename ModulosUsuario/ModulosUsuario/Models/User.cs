@@ -52,6 +52,10 @@ namespace ModulosUsuario.Models
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (value == null)
+            {
+                return new ValidationResult(validationContext.DisplayName + " não pode ser nulo");
+            }
             string cpf = value.ToString();
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
