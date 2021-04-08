@@ -1,8 +1,39 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model IEnumerable<User>
+
+<h1>USUÁRIOS!!!!</h1>
+<a class="btn btn-primary" href="/User/CreateOrEdit" role="button">Criar Usuário</a>
+
+@foreach (var user in Model)
+{
+    var targetModal = "#deleteModal" + user.UserId;
+    var modalId = "deleteModal" + user.UserId;
+    <p>
+        <strong>Login:</strong>@user.Login @Html.ActionLink("Editar", "CreateOrEdit", "User", new { user.UserId }, null)
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="@targetModal">
+            Delete
+        </button>
+    </p>
+    <div class="modal fade" id="@modalId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure want to delete this item?
+                </div>
+                <div class="modal-footer">
+                    <form action="@Url.Action("Delete", new{ user.UserId })" asp-antiforgery="true" method="post">
+                        <input type="submit" class="btn bg-danger" value="Delete" />
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 
-<span>você criou a sua conta!</span>
+

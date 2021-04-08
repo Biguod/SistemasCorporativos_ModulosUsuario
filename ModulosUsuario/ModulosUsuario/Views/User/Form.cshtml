@@ -9,6 +9,7 @@
     <h3>Cadastro de usuário</h3>
     <hr />
     <form asp-controller="User" asp-action="CreateOrEdit" asp-antiforgery="true" method="post">
+        @Html.HiddenFor(h => h.UserId)
         <div class="form-group">
             <label asp-for="Login"></label>
             <input asp-for="Login" class="form-control" placeholder="Informe o Login desejado" />

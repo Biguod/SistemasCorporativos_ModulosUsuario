@@ -26,9 +26,6 @@ namespace ModulosUsuario.Services
             if (userRepository.GetByLogin(user.Login) != null)
                 return user; //throw exception aqui!!
 
-            //user = new User { UserId = 0, Login = "testando", Password = "Senha", Email = "b@b.com", Name = "Bigu", LastName = "Linha", BirthDate = DateTime.Now, CPF = "526648244" };
-
-
             userRepository.Create(user);
             return user;
         }
@@ -39,9 +36,10 @@ namespace ModulosUsuario.Services
             return user;
         }
 
-        public void DeleteUser(User user)
+        public void DeleteUser(int userId)
         {
-            if (userRepository.GetById(user.UserId).UserId <= 0)
+            var user = userRepository.GetById(userId);
+            if (user.UserId == 0)
                 return; //throw exception aqui !!!
 
             userRepository.DeleteUser(user);
@@ -49,7 +47,25 @@ namespace ModulosUsuario.Services
 
         public User GetUserById(int userId)
         {
-            return userRepository.GetById(userId);
+            var user = userRepository.GetById(userId);
+            user = user == null ? new User() : user;
+            return user;
+        }
+
+        public User CreateOrEditUser(User user)
+        {
+            if(user.UserId == 0)
+            {
+                return CreateUser(user);
+            }
+            return UpdateUser(user);
+        }
+
+        public User CreateOrEditUserAddress(int userId, List<AddressUser> addresses)
+        {
+            var currentUser = userRepository.GetById(userId);
+            currentUser.Addresses = addresses;
+            return UpdateUser(currentUser);
         }
 
         //public User SetUserPermission(User user, int userPermission)

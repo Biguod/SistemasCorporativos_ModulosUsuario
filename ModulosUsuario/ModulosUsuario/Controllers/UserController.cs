@@ -19,16 +19,16 @@ namespace ModulosUsuario.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction("CreateOrEdit", new User());
+            var users = userService.GetUsers();
+            return View(users);
         }
 
         [HttpPost]
-
         public ActionResult CreateOrEdit(User user)
         {
             if (this.ModelState.IsValid)
             {
-                user = userService.CreateUser(user);
+                user = userService.CreateOrEditUser(user);
                 return RedirectToAction("Index");
             }
 
@@ -36,10 +36,31 @@ namespace ModulosUsuario.Controllers
             
         }
         
-        public ActionResult CreateOrEdit(int id)
+        public ActionResult CreateOrEdit(int userId)
         {
-            var user = new User(); //pegar do banco
+            var user = userService.GetUserById(userId);
             return View("Form", user);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int userId)
+        {
+            userService.DeleteUser(userId);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditAddress(AddressUserViewModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                userService.CreateOrEditUserAddress(model.UserId, model.Addresses);
+                return RedirectToAction("Index");
+            }   
+
+            return View("FormAddresses", model);//Mudar 
+
         }
     }
 }

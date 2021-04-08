@@ -32,6 +32,7 @@ namespace ModulosUsuario.Models
         public string LastName { get; set; }
 
         [Display(Name = "Data de Nascimento")]
+        [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
 
         [Required(ErrorMessage = "CPF inválido!")]

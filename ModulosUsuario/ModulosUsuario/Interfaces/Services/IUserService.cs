@@ -9,9 +9,11 @@ namespace ModulosUsuario.Interfaces.Services
     public interface IUserService
     {
         IEnumerable<User> GetUsers();
+        User CreateOrEditUser(User user);
         User CreateUser(User user);
         User UpdateUser(User user);
-        void DeleteUser(User user);
+        void DeleteUser(int userId);
         User GetUserById(int userId);
+        User CreateOrEditUserAddress(int userId, List<AddressUser> addresses);
     }
 }
