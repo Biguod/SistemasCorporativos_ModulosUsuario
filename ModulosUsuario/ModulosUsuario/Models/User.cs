@@ -46,7 +46,7 @@ namespace ModulosUsuario.Models
         [Display(Name = "Celular")]
         public string Phone { get; set; }
 
-        public ICollection<AddressUser> Addresses { get; set; }
+        public List<AddressUser> Addresses { get; set; }
         
     }
     public class CPFValidator : ValidationAttribute

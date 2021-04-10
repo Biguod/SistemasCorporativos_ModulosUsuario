@@ -1,60 +1,27 @@
 ﻿@model ModulosUsuario.Models.User
-@{
-    ViewData["Title"] = "Home Page";
+@{ ViewData["Title"] = "Criar/Editar Usuário"; }
 
-}
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Criar/Editar Usuário</h3>
+    </div>
 
-<div class="text-center">
-
-    <h3>Cadastro de usuário</h3>
-    <hr />
     <form asp-controller="User" asp-action="CreateOrEdit" asp-antiforgery="true" method="post">
-        @Html.HiddenFor(h => h.UserId)
-        <div class="form-group">
-            <label asp-for="Login"></label>
-            <input asp-for="Login" class="form-control" placeholder="Informe o Login desejado" />
-            <span asp-validation-for="Login" class="field-validation-valid text-danger"></span>
+        @Html.Partial("~/Views/User/_Form/_PersonalData.cshtml", Model)
+        @Html.Partial("~/Views/User/_Form/_AddressForm.cshtml", Model)
 
-        </div>
-        <div class="form-group">
-            <label asp-for="Password"></label>
-            <input asp-for="Password" type="password" class="form-control" placeholder="Digite a senha" />
-            <span asp-validation-for="Password" class="field-validation-valid text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Email"></label>
-            <input asp-for="Email" class="form-control" placeholder="Digite o e-mail" />
-            <span asp-validation-for="Email" class="field-validation-valid text-danger"></span>
 
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="text-align:end">
+                            <a asp-action="Index" class="btn btn-dark mr-2">Retornar</a>                        
+                            <input type="submit" class="btn btn-success" value="Salvar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label asp-for="Name"></label>
-            <input asp-for="Name" class="form-control" placeholder="Digite seu Nome" />
-            <span asp-validation-for="Name" class="field-validation-valid text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="LastName"></label>
-            <input asp-for="LastName" class="form-control" placeholder="Digite seu sobrenome" />
-            <span asp-validation-for="LastName" class="field-validation-valid text-danger"></span>
-
-        </div>
-        <div class="form-group">
-            <label asp-for="BirthDate"></label>
-            <input asp-for="BirthDate" class="form-control" placeholder="Informe sua data de nascimento" />
-        </div>
-
-        <div class="form-group">
-            <label asp-for="CPF"></label>
-            <input asp-for="CPF" class="form-control" placeholder="Digite seu CPF" maxlength="11" />
-            <span asp-validation-for="CPF" class="field-validation-valid text-danger"></span>
-
-        </div>
-        <div class="form-group">
-            <label asp-for="Phone"></label>
-            <input asp-for="Phone" class="form-control" placeholder="Insira seu CELULAR ex: 41999999999" maxlength="11" />
-            <span asp-validation-for="Phone" class="field-validation-valid text-danger"></span>
-        </div>
-        <input type="submit" value="Submit" />
     </form>
-
 </div>

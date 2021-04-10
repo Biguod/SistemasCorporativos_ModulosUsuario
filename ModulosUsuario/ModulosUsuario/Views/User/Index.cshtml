@@ -1,39 +1,95 @@
 ﻿@model IEnumerable<User>
+@{ ViewData["Title"] = "Usuários"; }
 
-<h1>USUÁRIOS!!!!</h1>
-<a class="btn btn-primary" href="/User/CreateOrEdit" role="button">Criar Usuário</a>
+<script src="~/js/views/user.js"></script>
+<!-- Main content -->
 
-@foreach (var user in Model)
-{
-    var targetModal = "#deleteModal" + user.UserId;
-    var modalId = "deleteModal" + user.UserId;
-    <p>
-        <strong>Login:</strong>@user.Login @Html.ActionLink("Editar", "CreateOrEdit", "User", new { user.UserId }, null)
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header d-inline">
+                <h3 class="box-title">Gerencia Usuários <a class="float-right" href="/User/CreateOrEdit" role="button" title="Criar Usuário"><i class="fas fa-plus-square"></i></a></h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="usuarios" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Login)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.LastName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Phone)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Login)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td align="center">
+                    @Html.ActionLink("Editar", "CreateOrEdit", "User", new { userId = item.UserId })
+                    @*<a class="btn btn-sm btn-primary mr-4" action="">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>*@
+                    <button deleteUserId="@item.UserId" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="userController.deleteModalId(this)">
+                        <i class="fas fa-trash-alt"></i> Deletar
+                    </button>
+                </td>
+            </tr>}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
 
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="@targetModal">
-            Delete
-        </button>
-    </p>
-    <div class="modal fade" id="@modalId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
-                </div>
-                <div class="modal-body">
-                    Are you sure want to delete this item?
-                </div>
-                <div class="modal-footer">
-                    <form action="@Url.Action("Delete", new{ user.UserId })" asp-antiforgery="true" method="post">
-                        <input type="submit" class="btn bg-danger" value="Delete" />
-                    </form>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Confirmar Deleção</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja deletar esse usuário?
+            </div>
+            <div class="modal-footer">
+                <form action="" id="deleteModalAction" asp-antiforgery="true" method="post">
+                    <input type="submit" class="btn bg-danger" value="Deletar" />
+                </form>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
-}
-
-
-
+</div>

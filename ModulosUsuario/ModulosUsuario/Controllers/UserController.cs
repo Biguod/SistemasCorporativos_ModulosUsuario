@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ModulosUsuario.Interfaces.Services;
 using ModulosUsuario.Models;
 using System;
@@ -32,6 +33,21 @@ namespace ModulosUsuario.Controllers
                 return RedirectToAction("Index");
             }
 
+			//mock cities and states ##REMOVE
+            var cities = new List<City>();
+            var states = new List<State>();
+            for (int i = 0; i < 6; i++)
+            {
+                var city = new City { CityId = i, Description = "Cidade " + i.ToString() };
+                var state = new State { StateId = i, Description = "Estado " + i.ToString() };
+
+                cities.Add(city);
+                states.Add(state);
+            }
+            ViewBag.CityList = new SelectList(cities, "CityId", "Description"); ;//cityService.GetCities();
+            ViewBag.StateList = new SelectList(states, "StateId", "Description"); ;//stateService.GetStates();
+            //--------------
+			
             return View("Form", user);
             
         }
@@ -39,6 +55,22 @@ namespace ModulosUsuario.Controllers
         public ActionResult CreateOrEdit(int userId)
         {
             var user = userService.GetUserById(userId);
+			
+			//mock cities and states ##REMOVE
+            var cities = new List<City>();
+            var states = new List<State>();
+            for (int i = 0; i < 6; i++)
+            {
+                var city = new City { CityId = i, Description = "Cidade " + i.ToString() };
+                var state = new State { StateId = i, Description = "Estado " +  i.ToString() };
+
+                cities.Add(city);
+                states.Add(state);
+            }
+            ViewBag.CityList = new SelectList(cities, "CityId", "Description"); ;//cityService.GetCities();
+            ViewBag.StateList = new SelectList(states, "StateId", "Description"); ;//stateService.GetStates();
+            //--------------
+			
             return View("Form", user);
         }
 
