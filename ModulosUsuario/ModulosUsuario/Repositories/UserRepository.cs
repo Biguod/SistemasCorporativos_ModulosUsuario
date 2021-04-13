@@ -49,7 +49,15 @@ namespace ModulosUsuario.Repositories
         public User GetById(int userId)
         {
             var user = context.Users.Find(userId);
-            context.Entry(user).Collection(c => c.Addresses).Load();
+            if(user != null)
+            {
+                context.Entry(user).Collection(c => c.Addresses).Load();
+            }
+            else
+            {
+                user = new User();
+                user.Addresses = new List<AddressUser>();
+            }
             return user;
         }
     }

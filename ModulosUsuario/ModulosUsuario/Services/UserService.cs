@@ -48,7 +48,7 @@ namespace ModulosUsuario.Services
         public User GetUserById(int userId)
         {
             var user = userRepository.GetById(userId);
-            user = user == null ? new User() : user;
+            
             return user;
         }
 

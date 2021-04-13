@@ -47,7 +47,8 @@ namespace ModulosUsuario.Models
         public string Phone { get; set; }
 
         public List<AddressUser> Addresses { get; set; }
-        
+        public List<UsersPermissions> UserPermissions { get; set; }
+
     }
     public class CPFValidator : ValidationAttribute
     {

@@ -15,13 +15,11 @@ namespace ModulosUsuario.Models
         [Required]
         public string PostalCode { get; set; }
         [Required]
-        public int StateId { get; set; }
+        public string State { get; set; }
         [Required]
-        public int CityId { get; set; }
+        public string City { get; set; }
         [Required]
         public string District { get; set; }
         public User User { get; set; }
-        public City City { get; set; }
-        public State State { get; set; }
     }
 }

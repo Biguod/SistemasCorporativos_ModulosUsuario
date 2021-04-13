@@ -19,10 +19,13 @@ namespace ModulosUsuario.Contexts
              .WithMany(u => u.Addresses)
              .HasForeignKey(u => u.UserId)
              .IsRequired();
+            modelBuilder.Entity<UsersPermissions>().HasKey(sc => new { sc.UserId, sc.PermissionId });
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<AddressUser> AddressUser { get; set; }
+        public DbSet<Permissions> Permissions { get; set; }
+        public DbSet<UsersPermissions> UsersPermissions { get; set; }
     }
 }
 
