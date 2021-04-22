@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ModulosUsuario.Models
 {
@@ -24,6 +21,6 @@ namespace ModulosUsuario.Models
         public int Unity { get; set; }
 
         [Required]
-        public decimal PriceCost { get; set; } //Arrumar no banco para decimal
+        public decimal PriceCost { get; set; }
     }
 }

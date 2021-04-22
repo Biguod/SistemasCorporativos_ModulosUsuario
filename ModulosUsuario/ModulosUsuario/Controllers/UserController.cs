@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ModulosUsuario.Interfaces.Services;
 using ModulosUsuario.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ModulosUsuario.Controllers
 {
@@ -34,7 +30,6 @@ namespace ModulosUsuario.Controllers
             }
 
             return View("Form", user);
-            
         }
         
         public ActionResult CreateOrEdit(int userId)
@@ -53,16 +48,15 @@ namespace ModulosUsuario.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateOrEditAddress(AddressUserViewModel model)
+        public ActionResult GetNewAddress(User user)
         {
-            if (this.ModelState.IsValid)
-            {
-                userService.CreateOrEditUserAddress(model.UserId, model.Addresses);
-                return RedirectToAction("Index");
-            }   
+            if (user.Addresses == null)
+                user.Addresses = new List<AddressUser>();
 
-            return View("FormAddresses", model);//Mudar 
+            user.Addresses.Add(new AddressUser());
 
+            return View("Form", user);
         }
+
     }
 }

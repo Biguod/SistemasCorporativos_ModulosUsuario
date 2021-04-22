@@ -1,15 +1,16 @@
 ﻿@model ModulosUsuario.Models.User
 @{ ViewData["Title"] = "Criar/Editar Usuário"; }
-
+@{ 
+    var title = Model.UserId == 0 ? "Criar" : "Editar";
+}
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">Criar/Editar Usuário</h3>
+        <h3 class="box-title">@title Usuário</h3>
     </div>
 
     <form asp-controller="User" asp-action="CreateOrEdit" asp-antiforgery="true" method="post">
         @Html.Partial("~/Views/User/_Form/_PersonalData.cshtml", Model)
         @Html.Partial("~/Views/User/_Form/_AddressForm.cshtml", Model)
-
 
         <div class="card">
             <div class="card-body">

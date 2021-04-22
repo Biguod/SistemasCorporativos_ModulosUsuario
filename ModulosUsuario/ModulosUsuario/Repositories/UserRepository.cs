@@ -1,10 +1,8 @@
 ﻿using ModulosUsuario.Contexts;
 using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ModulosUsuario.Repositories
 {
@@ -50,14 +48,11 @@ namespace ModulosUsuario.Repositories
         {
             var user = context.Users.Find(userId);
             if(user != null)
-            {
                 context.Entry(user).Collection(c => c.Addresses).Load();
-            }
             else
-            {
                 user = new User();
+            if (user.Addresses == null)
                 user.Addresses = new List<AddressUser>();
-            }
             return user;
         }
     }

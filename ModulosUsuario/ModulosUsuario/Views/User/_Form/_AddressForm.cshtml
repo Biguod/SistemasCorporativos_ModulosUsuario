@@ -1,56 +1,58 @@
 ﻿@model ModulosUsuario.Models.User
+
+<button type="submit" class="btn btn-primary" asp-action="GetNewAddress">Adicionar Endereço</button>
+
 @if (Model.Addresses != null)
 {
     for (int i = 0; i < Model.Addresses.Count; i++)
     {
-        <div class="card">
-            <div class="card-body">
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="card-title">Endereço @(i + 1)</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.HiddenFor(h => h.Addresses[i].AddressId)
                 <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="card-title">Endereço @(i + 1)</h3>
+                    <div class="form-group col-md-7">
+                        <label asp-for="@Model.Addresses[i].Street"></label>
+                        <input asp-for="@Model.Addresses[i].Street" class="form-control" />
+                        <span asp-validation-for="@Model.Addresses[i].Street" class="field-validation-valid text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label asp-for="@Model.Addresses[i].Number"></label>
+                        <input asp-for="@Model.Addresses[i].Number" class="form-control" />
+                        <span asp-validation-for="@Model.Addresses[i].Number" class="field-validation-valid text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="@Model.Addresses[i].District"></label>
+                        <input asp-for="@Model.Addresses[i].District" class="form-control" />
+                        <span asp-validation-for="@Model.Addresses[i].District" class="field-validation-valid text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        @Html.HiddenFor(h => h.Addresses[i].AddressId)
-                        <div class="row">
-                            <div class="form-group col-md-7">
-                                <label asp-for="@Model.Addresses[i].Street"></label>
-                                <input asp-for="@Model.Addresses[i].Street" class="form-control" />
-                                <span asp-validation-for="@Model.Addresses[i].Street" class="field-validation-valid text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label asp-for="@Model.Addresses[i].Number"></label>
-                                <input asp-for="@Model.Addresses[i].Number" class="form-control" />
-                                <span asp-validation-for="@Model.Addresses[i].Number" class="field-validation-valid text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label asp-for="@Model.Addresses[i].District"></label>
-                                <input asp-for="@Model.Addresses[i].District" class="form-control" />
-                                <span asp-validation-for="@Model.Addresses[i].District" class="field-validation-valid text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <label asp-for="@Model.Addresses[i].PostalCode"></label>
-                                <input asp-for="@Model.Addresses[i].PostalCode" class="form-control" />
-                                <span asp-validation-for="@Model.Addresses[i].PostalCode" class="field-validation-valid text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label asp-for="@Model.Addresses[i].City"></label>
-                                <input asp-for="@Model.Addresses[i].City" class="form-control" />
-                                <span asp-validation-for="@Model.Addresses[i].City" class="field-validation-valid text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label asp-for="@Model.Addresses[i].State"></label>
-                                <input asp-for="@Model.Addresses[i].State" class="form-control" />
-                                <span asp-validation-for="@Model.Addresses[i].State" class="field-validation-valid text-danger"></span>
-                            </div>
-                        </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.Addresses[i].PostalCode"></label>
+                        <input asp-for="@Model.Addresses[i].PostalCode" class="form-control" />
+                        <span asp-validation-for="@Model.Addresses[i].PostalCode" class="field-validation-valid text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.Addresses[i].City"></label>
+                        <input asp-for="@Model.Addresses[i].City" class="form-control" />
+                        <span asp-validation-for="@Model.Addresses[i].City" class="field-validation-valid text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.Addresses[i].State"></label>
+                        <input asp-for="@Model.Addresses[i].State" class="form-control" />
+                        <span asp-validation-for="@Model.Addresses[i].State" class="field-validation-valid text-danger"></span>
                     </div>
                 </div>
             </div>
         </div>
-    }
+    </div>
+</div>}
 
 }

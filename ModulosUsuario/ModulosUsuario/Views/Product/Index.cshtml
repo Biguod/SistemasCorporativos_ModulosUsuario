@@ -1,32 +1,35 @@
-﻿@model IEnumerable<User>
-@{ ViewData["Title"] = "Usuários"; }
+﻿@model IEnumerable<Product>
+@{ ViewData["Title"] = "Produtos"; }
 
-<script src="~/js/views/user.js"></script>
+<script src="~/js/views/product.js"></script>
 
 <div class="row">
     <div class="col-md-12">
         <div class="box">
             <div class="box-header d-inline">
-                <h3 class="box-title">Gerencia Usuários <a class="float-right" href="/User/CreateOrEdit" role="button" title="Criar Usuário"><i class="fas fa-plus-square"></i></a></h3>
+                <h3 class="box-title">Gerencia Produtos <a class="float-right" href="/Product/CreateOrEdit" role="button" title="Criar Produto"><i class="fas fa-plus-square"></i></a></h3>
             </div>
             <div class="box-body">
                 <table id="usuarios" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Login)
+                                @Html.DisplayNameFor(model => model.SKU)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Name)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.LastName)
+                                @Html.DisplayNameFor(model => model.Description)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Email)
+                                @Html.DisplayNameFor(model => model.Unity)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Phone)
+                                @Html.DisplayNameFor(model => model.DueDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PriceList)
                             </th>
                             <th></th>
                         </tr>
@@ -36,28 +39,32 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Login)
+                                    @Html.DisplayFor(modelItem => item.SKU)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.LastName)
+                                    @Html.DisplayFor(modelItem => item.Description)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Email)
+                                    @Html.DisplayFor(modelItem => item.Unity)
+                                    @Html.DisplayFor(modelItem => item.UnityType.Description)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Phone)
+                                    @Html.DisplayFor(modelItem => item.DueDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PriceList)
                                 </td>
                                 <td align="center">
-                                    @Html.ActionLink("Editar", "CreateOrEdit", "User", new { userId = item.UserId }, new { @class="btn btn-sm btn-primary"})
-                                    <button deleteUserId="@item.UserId" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="userController.deleteModalId(this)">
+                                    @Html.ActionLink("Editar", "CreateOrEdit", "Product", new { productId = item.ProductId }, new { @class = "btn btn-sm btn-primary" })
+                                    <button deleteProductId="@item.ProductId" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="productController.deleteModalId(this)">
                                         <i class="fas fa-trash-alt"></i> Deletar
                                     </button>
                                 </td>
                             </tr>
-                         }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -74,7 +81,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                Tem certeza que deseja deletar esse usuário?
+                Tem certeza que deseja deletar esse produto?
             </div>
             <div class="modal-footer">
                 <form action="" id="deleteModalAction" asp-antiforgery="true" method="post">

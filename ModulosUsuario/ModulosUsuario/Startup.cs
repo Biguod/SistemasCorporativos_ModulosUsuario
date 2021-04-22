@@ -32,8 +32,17 @@ namespace ModulosUsuario
         {
             services.AddControllersWithViews();
 
+            //services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IUnityTypeService, UnityTypeService>();
+
+            //repositories
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IUnityTypeRepository, UnityTypeRepository>();
+
+            //database
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ModulosUsuario.Models
 {
-    public class Product // Adicionar UnityType no banco de dados (Kg, L, Fardo, mL)
+    public class Product
     {
         [Key]
         public int ProductId { get; set; }
@@ -27,6 +24,11 @@ namespace ModulosUsuario.Models
         public int Unity { get; set; }
 
         [Required]
-        public decimal PriceList { get; set; } // Fazer alteração no banco
+        public int UnityTypeId { get; set; }
+
+        [Required]
+        public decimal PriceList { get; set; }
+
+        public virtual UnityType UnityType { get; set; }
     }
 }
