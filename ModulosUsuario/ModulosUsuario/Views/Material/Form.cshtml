@@ -1,0 +1,75 @@
+﻿@model ModulosUsuario.Models.Material
+@{ ViewData["Title"] = Model.MaterialId == 0 ? "Criar Material" : "Editar Material"; }
+@{ 
+    var title = Model.MaterialId == 0 ? "Criar" : "Editar";
+}
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">@title Material</h3>
+    </div>
+
+    <form asp-controller="Material" asp-action="CreateOrEdit" asp-antiforgery="true" method="post">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="card-title">Informações do Material</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.HiddenFor(h => h.MaterialId)
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label asp-for="Name"></label>
+                                <input asp-for="Name" class="form-control" placeholder="Informe o Nome" />
+                                <span asp-validation-for="Name" class="field-validation-valid text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="PriceCost"></label>
+                                <input asp-for="PriceCost" class="form-control" placeholder="Digite o Preço de Custo" />
+                                <span asp-validation-for="PriceCost" class="field-validation-valid text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label asp-for="DueDate"></label>
+                                <input asp-for="DueDate" class="form-control" placeholder="Informe a Data de Vencimento" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="UnityType"></label>
+                                @Html.DropDownList("UnityTypeId", (IEnumerable<SelectListItem>)ViewBag.UnityTypes, null, new { @class = "form-control" })
+                                <span asp-validation-for="UnityTypeId" class="field-validation-valid text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="Unity"></label>
+                                <input type="number" asp-for="Unity" class="form-control" placeholder="Digite a Unidade" />
+                                <span asp-validation-for="Unity" class="field-validation-valid text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label asp-for="Description"></label>
+                                <input asp-for="Description" class="form-control" placeholder="Informe a Descrição do Material" />
+                                <span asp-validation-for="Description" class="field-validation-valid text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="text-align:end">
+                            <a asp-action="Index" class="btn btn-dark mr-2">Retornar</a>
+                            <input type="submit" class="btn btn-success" value="Salvar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

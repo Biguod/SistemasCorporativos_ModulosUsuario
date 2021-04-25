@@ -1,0 +1,47 @@
+﻿@model ModulosUsuario.Models.UnityType
+@{ ViewData["Title"] = Model.UnityTypeId == 0 ? "Criar Tipo de Unidade" : "Editar Tipo de Unidade"; }
+@{ 
+    var title = Model.UnityTypeId == 0 ? "Criar" : "Editar";
+}
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">@title Tipo</h3>
+    </div>
+
+    <form asp-controller="UnityType" asp-action="CreateOrEdit" asp-antiforgery="true" method="post">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="card-title">Informações do Tipo de Unidade</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.HiddenFor(h => h.UnityTypeId)
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label asp-for="Description"></label>
+                                <input asp-for="Description" class="form-control" placeholder="Informe a Descrição do Tipo" />
+                                <span asp-validation-for="Description" class="field-validation-valid text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="text-align:end">
+                            <a asp-action="Index" class="btn btn-dark mr-2">Retornar</a>
+                            <input type="submit" class="btn btn-success" value="Salvar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

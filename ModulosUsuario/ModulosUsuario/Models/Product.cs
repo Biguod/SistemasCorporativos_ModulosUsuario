@@ -9,7 +9,7 @@ namespace ModulosUsuario.Models
         public int ProductId { get; set; }
 
         [Required]
-        public int SKU { get; set; } // Sepa string ?
+        public string SKU { get; set; } // Sepa string ?
 
         [Required]
         public string Description { get; set; }
@@ -18,6 +18,7 @@ namespace ModulosUsuario.Models
         public string Name { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime DueDate { get; set; }
 
         [Required]

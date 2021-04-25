@@ -15,12 +15,18 @@ namespace ModulosUsuario.Models
         public string Name { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime DueDate { get; set; }
 
         [Required]
         public int Unity { get; set; }
 
         [Required]
+        public int UnityTypeId { get; set; }
+
+        [Required]
         public decimal PriceCost { get; set; }
+
+        public virtual UnityType UnityType { get; set; }
     }
 }

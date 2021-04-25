@@ -44,6 +44,8 @@ namespace ModulosUsuario.Models
         [Required(ErrorMessage = "Número de celular não pode ser vazio!")]
         [RegularExpression("^\\d{11}$", ErrorMessage = "Número de celular inválido!")]
         [Display(Name = "Celular")]
+        [MinLength(11)]
+        [MaxLength(11)]
         public string Phone { get; set; }
 
         public List<AddressUser> Addresses { get; set; }

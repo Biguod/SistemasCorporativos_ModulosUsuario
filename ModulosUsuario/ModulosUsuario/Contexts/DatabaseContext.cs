@@ -35,6 +35,9 @@ namespace ModulosUsuario.Contexts
         public DbSet<UsersPermissions> UsersPermissions { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<UnityType> UnityType { get; set; }
+        public DbSet<Material> Material { get; set; }
+        public DbSet<Tools> Tools { get; set; }
+        public DbSet<Branch> Branch { get; set; }
     }
 }
 

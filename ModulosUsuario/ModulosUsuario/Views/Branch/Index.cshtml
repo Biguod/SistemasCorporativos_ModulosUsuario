@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Branch>
+@{ ViewData["Title"] = "Filiais"; }
+
+<script src="~/js/views/branch.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header d-inline">
+                <h3 class="box-title">Gerencia Filiais <a class="float-right" href="/Branch/CreateOrEdit" role="button" title="Criar Tipo"><i class="fas fa-plus-square"></i></a></h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td align="center">
+                                    @Html.ActionLink("Editar", "CreateOrEdit", "Branch", new { branchId = item.BranchId }, new { @class = "btn btn-sm btn-primary" })
+                                    <button deleteBranchId="@item.BranchId" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="branchController.deleteModalId(this)">
+                                        <i class="fas fa-trash-alt"></i> Deletar
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Confirmar Deleção</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja deletar essa filial?
+            </div>
+            <div class="modal-footer">
+                <form action="" id="deleteModalAction" asp-antiforgery="true" method="post">
+                    <input type="submit" class="btn bg-danger" value="Deletar" />
+                </form>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
