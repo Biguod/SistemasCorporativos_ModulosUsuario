@@ -21,11 +21,57 @@ namespace ModulosUsuario.Contexts
                 .HasForeignKey(u => u.UserId)
                 .IsRequired();
 
-            modelBuilder.Entity<UsersPermissions>().HasKey(sc => new { sc.UserId, sc.PermissionId });
+            modelBuilder.Entity<UsersPermissions>()
+                .HasKey(sc => new { sc.UserId, sc.PermissionId });
 
             modelBuilder.Entity<Product>()
-                .HasIndex(p => p.SKU)
-                .IsUnique();
+                .HasMany(pt => pt.ProductTransactions)
+                .WithOne(p => p.Product)
+                .IsRequired();
+
+            modelBuilder.Entity<Material>()
+                .HasMany(mt => mt.MaterialTransactions)
+                .WithOne(m => m.Material)
+                .IsRequired();
+
+            modelBuilder.Entity<Tools>()
+                .HasMany(tt => tt.ToolsTransactions)
+                .WithOne(t => t.Tool)
+                .IsRequired();
+
+            modelBuilder.Entity<Branch>()
+                .HasOne(s => s.Stock)
+                .WithOne(b => b.Branch)
+                .IsRequired();
+
+            modelBuilder.Entity<Stock>()
+                .HasOne(s => s.Branch)
+                .WithOne(b => b.Stock)
+                .IsRequired();
+
+            modelBuilder.Entity<ToolsLog>()
+                .HasOne(t => t.Tool)
+                .WithMany(tl => tl.ToolsLogs)
+                .HasForeignKey(tl => tl.ToolsId)
+                .IsRequired();
+
+            modelBuilder.Entity<ProductTransaction>()
+                .HasOne(p => p.Product)
+                .WithMany(pt => pt.ProductTransactions)
+                .HasForeignKey(pt => pt.ProductId)
+                .IsRequired();
+
+            modelBuilder.Entity<MaterialTransaction>()
+                .HasOne(m => m.Material)
+                .WithMany(mt => mt.MaterialTransactions)
+                .HasForeignKey(mt => mt.MaterialId)
+                .IsRequired();
+
+            modelBuilder.Entity<ToolsTransaction>()
+                .HasOne(t => t.Tool)
+                .WithMany(tt => tt.ToolsTransactions)
+                .HasForeignKey(tt => tt.ToolId)
+                .IsRequired();
 
         }
 
@@ -38,8 +84,13 @@ namespace ModulosUsuario.Contexts
         public DbSet<Material> Material { get; set; }
         public DbSet<Tools> Tools { get; set; }
         public DbSet<Branch> Branch { get; set; }
+        public DbSet<ProductTransaction> ProductTransaction { get; set; }
+        public DbSet<Stock> Stock { get; set; }
+        public DbSet<ToolsLog> ToolsLog { get; set; }
+        public DbSet<ToolsTransaction> ToolsTransaction { get; set; }
+        public DbSet<MaterialTransaction> MaterialTransaction { get; set; }
+        public DbSet<TransactionType> TransactionType { get; set; }
     }
 }
-
 
 

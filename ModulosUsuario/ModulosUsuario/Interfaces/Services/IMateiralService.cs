@@ -9,5 +9,9 @@ namespace ModulosUsuario.Interfaces.Services
         Material CreateOrEditMaterial(Material material);
         void DeleteMaterial(int materialId);
         Material GetMaterialById(int materialId);
+        IEnumerable<MaterialTransaction> GetMaterialTransactions();
+        MaterialTransaction CreateMaterialTransaction(MaterialTransaction materialTransaction);
+        MaterialTransaction GetByMaterialTransactionId(int materialTransactionId);
+        IEnumerable<MaterialTransaction> GetTransactionByMaterialId(int materialId);
     }
 }

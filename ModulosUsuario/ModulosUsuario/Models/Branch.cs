@@ -10,5 +10,7 @@ namespace ModulosUsuario.Models
         [Required]
         public string Description { get; set; }
 
+        public Stock Stock { get; set; }
+
     }
 }

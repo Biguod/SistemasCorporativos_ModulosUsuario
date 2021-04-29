@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ModulosUsuario.Models
@@ -30,6 +31,11 @@ namespace ModulosUsuario.Models
         [Required]
         public decimal PriceList { get; set; }
 
+        [Required]
+        public bool Active { get; set; }
+
         public virtual UnityType UnityType { get; set; }
+
+        public List<ProductTransaction> ProductTransactions { get; set; }
     }
 }

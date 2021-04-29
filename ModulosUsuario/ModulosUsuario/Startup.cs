@@ -60,7 +60,7 @@ namespace ModulosUsuario
                 app.UseHsts();
             }
 
-            databaseContext.Database.Migrate();
+            //databaseContext.Database.Migrate();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

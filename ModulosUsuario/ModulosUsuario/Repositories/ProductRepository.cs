@@ -35,16 +35,14 @@ namespace ModulosUsuario.Repositories
 
         public void Delete(Product product)
         {
-            context.Remove(product);
+            product.Active = false;
+            context.Update(product);
             context.SaveChanges();
         }
 
         public Product GetById(int productId)
-        {
-            var product = context.Product.Find(productId);
-            if(product == null)
-                product = new Product();
-            return product;
+        {            
+            return context.Product.Find(productId);
         }
     }
 }

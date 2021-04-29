@@ -8,9 +8,11 @@ namespace ModulosUsuario.Services
     public class MaterialService : IMaterialService
     {
         public readonly IMaterialRepository materialRepository;
-        public MaterialService(IMaterialRepository materialRepository)
+        public readonly IMaterialTransactionRepository materialTransactionRepository;
+        public MaterialService(IMaterialRepository materialRepository, IMaterialTransactionRepository materialTransactionRepository)
         {
             this.materialRepository = materialRepository;
+            this.materialTransactionRepository = materialTransactionRepository;
         }
 
         public IEnumerable<Material> GetMaterials()
@@ -21,7 +23,7 @@ namespace ModulosUsuario.Services
         public void DeleteMaterial(int materialId)
         {
             var material = materialRepository.GetById(materialId);
-            if (material.MaterialId == 0)
+            if (material.Active == false)
                 return; //throw exception aqui !!!
 
             materialRepository.Delete(material);
@@ -30,7 +32,8 @@ namespace ModulosUsuario.Services
         public Material GetMaterialById(int materialId)
         {
             var material = materialRepository.GetById(materialId);
-            
+            if (material == null)
+                material = new Material();
             return material;
         }
 
@@ -53,6 +56,30 @@ namespace ModulosUsuario.Services
         {
             materialRepository.Update(material);
             return material;
+        }
+
+        public IEnumerable<MaterialTransaction> GetMaterialTransactions()
+        {
+            return materialTransactionRepository.GetAll();
+        }
+
+        public MaterialTransaction CreateMaterialTransaction(MaterialTransaction materialTransaction)
+        {
+            materialTransactionRepository.Create(materialTransaction);
+            return materialTransaction;
+        }
+
+        public MaterialTransaction GetByMaterialTransactionId(int materialTransactionId)
+        {
+            var materialTransaction = materialTransactionRepository.GetById(materialTransactionId);
+            if (materialTransaction == null)
+                materialTransaction = new MaterialTransaction();
+            return materialTransaction;
+        }
+
+        public IEnumerable<MaterialTransaction> GetTransactionByMaterialId(int materialId)
+        {
+            return materialTransactionRepository.GetByMaterialId(materialId);
         }
     }
 }

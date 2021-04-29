@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ModulosUsuario.Models
@@ -27,6 +28,11 @@ namespace ModulosUsuario.Models
         [Required]
         public decimal PriceCost { get; set; }
 
+        [Required]
+        public bool Active { get; set; }
+
         public virtual UnityType UnityType { get; set; }
+
+        public List<MaterialTransaction> MaterialTransactions { get; set; }
     }
 }

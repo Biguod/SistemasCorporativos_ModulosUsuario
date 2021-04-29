@@ -35,16 +35,14 @@ namespace ModulosUsuario.Repositories
 
         public void Delete(Material material)
         {
-            context.Remove(material);
+            material.Active = false;
+            context.Update(material);
             context.SaveChanges();
         }
 
         public Material GetById(int materialId)
         {
-            var material = context.Material.Find(materialId);
-            if(material == null)
-                material = new Material();
-            return material;
+            return context.Material.Find(materialId);
         }
     }
 }

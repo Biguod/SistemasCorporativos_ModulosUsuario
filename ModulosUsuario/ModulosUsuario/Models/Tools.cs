@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ModulosUsuario.Models
@@ -28,5 +29,10 @@ namespace ModulosUsuario.Models
         public decimal PriceCost { get; set; }
 
         public virtual UnityType UnityType { get; set; }
+
+        public List<ToolsTransaction> ToolsTransactions { get; set; }
+
+        public List<ToolsLog> ToolsLogs { get; set; }
+
     }
 }
