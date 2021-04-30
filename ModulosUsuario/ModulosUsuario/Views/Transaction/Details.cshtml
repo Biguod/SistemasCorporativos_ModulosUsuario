@@ -1,0 +1,19 @@
+﻿@model TransactionsViewModel
+@{ ViewData["Title"] = "Detalhes das Transações"; }
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header d-inline">
+                <h3 class="box-title">Transações da filial @Model.Stock.Branch.Description</h3>
+            </div>
+            <div class="box-body">
+                <div id="accordion">
+                    @Html.Partial("~/Views/Transaction/_Details/_ProductTransactions.cshtml", Model)
+                    @Html.Partial("~/Views/Transaction/_Details/_MaterialTransactions.cshtml", Model)
+                    @Html.Partial("~/Views/Transaction/_Details/_ToolsTransactions.cshtml", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

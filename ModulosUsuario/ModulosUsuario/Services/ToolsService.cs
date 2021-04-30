@@ -45,14 +45,12 @@ namespace ModulosUsuario.Services
 
         private Tools CreateTools(Tools tools)
         {
-            toolsRepository.Create(tools);
-            return tools;
+            return toolsRepository.Create(tools);
         }
 
         private Tools UpdateTools(Tools tools)
         {
-            toolsRepository.Update(tools);
-            return tools;
+            return toolsRepository.Update(tools);
         }
     }
 }

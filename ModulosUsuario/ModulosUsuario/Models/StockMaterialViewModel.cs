@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ModulosUsuario.Models
 {
     public class StockMaterialViewModel
     {
         [Required]
-        public int MaterialId { get; set; }
+        public Material Material { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -21,6 +17,6 @@ namespace ModulosUsuario.Models
         public decimal AverageCost { get; set; }
 
         [Required]
-        public int StockId { get; set; }
+        public Stock Stock { get; set; }
     }
 }

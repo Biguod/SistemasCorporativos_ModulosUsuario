@@ -1,10 +1,9 @@
-﻿using ModulosUsuario.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using ModulosUsuario.Contexts;
 using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ModulosUsuario.Repositories
 {
@@ -31,19 +30,32 @@ namespace ModulosUsuario.Repositories
 
         public MaterialTransaction GetById(int materialTransactionId)
         {
-            return context.MaterialTransaction.Find(materialTransactionId);
+            return context.MaterialTransaction
+                .Where(w => w.MaterialTransactionId == materialTransactionId)
+                .Include(i => i.Stock)
+                .Include(i => i.Material)
+                .Include(i => i.TransactionType)
+                .FirstOrDefault();
         }
 
         public IEnumerable<MaterialTransaction> GetByMaterialId(int materialId)
         {
-            return context.MaterialTransaction.Where(w => w.MaterialId == materialId).ToList();
+            return context.MaterialTransaction
+                .Where(w => w.MaterialId == materialId)
+                .Include(i => i.Stock)
+                .Include(i => i.Material)
+                .Include(i => i.TransactionType)
+                .ToList();
         }
 
-        public MaterialTransaction Update(MaterialTransaction materialTransaction)
+        public IEnumerable<MaterialTransaction> GetByStockId(int stockId)
         {
-            context.Update(materialTransaction);
-            context.SaveChanges();
-            return materialTransaction;
+            return context.MaterialTransaction
+                .Where(w => w.StockId == stockId)
+                .Include(i => i.Stock)
+                .Include(i => i.Material)
+                .Include(i => i.TransactionType)
+                .ToList();
         }
     }
 }

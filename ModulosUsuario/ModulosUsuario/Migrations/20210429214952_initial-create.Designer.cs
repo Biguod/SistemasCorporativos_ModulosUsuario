@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModulosUsuario.Contexts;
 
 namespace ModulosUsuario.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210429214952_initial-create")]
+    partial class initialcreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,6 +131,9 @@ namespace ModulosUsuario.Migrations
                     b.Property<int>("StockId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("TotalValue")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("TransactionTypeId")
                         .HasColumnType("int");
 
@@ -218,6 +223,9 @@ namespace ModulosUsuario.Migrations
 
                     b.Property<int>("StockId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("TotalValue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("TransactionTypeId")
                         .HasColumnType("int");
@@ -331,6 +339,9 @@ namespace ModulosUsuario.Migrations
                     b.Property<int>("ToolId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("TotalValue")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("TransactionTypeId")
                         .HasColumnType("int");
 
@@ -358,9 +369,6 @@ namespace ModulosUsuario.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsIncoming")
-                        .HasColumnType("bit");
 
                     b.HasKey("TransactionTypeId");
 

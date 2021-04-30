@@ -13,5 +13,7 @@ namespace ModulosUsuario.Interfaces.Repositories
 
         ProductTransaction GetById(int productTransactionId);
 
+        IEnumerable<ProductTransaction> GetByStockId(int stockId);
+
     }
 }

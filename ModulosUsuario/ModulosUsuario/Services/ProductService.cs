@@ -49,14 +49,12 @@ namespace ModulosUsuario.Services
 
         private Product CreateProduct(Product product)
         {
-            productRepository.Create(product);
-            return product;
+            return productRepository.Create(product); ;
         }
 
         private Product UpdateProduct(Product product)
         {
-            productRepository.Update(product);
-            return product;
+            return productRepository.Update(product); ;
         }
 
         public IEnumerable<ProductTransaction> GetProductTransactions()
@@ -66,8 +64,7 @@ namespace ModulosUsuario.Services
 
         public ProductTransaction CreateProductTransaction(ProductTransaction productTransaction)
         {
-            productTransactionRepository.Create(productTransaction);
-            return productTransaction;
+            return productTransactionRepository.Create(productTransaction); ;
         }
 
         public ProductTransaction GetByProductTransactionId(int productTransactionId)

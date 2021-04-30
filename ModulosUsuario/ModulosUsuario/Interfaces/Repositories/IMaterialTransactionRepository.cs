@@ -1,8 +1,5 @@
 ﻿using ModulosUsuario.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ModulosUsuario.Interfaces.Repositories
 {
@@ -15,5 +12,7 @@ namespace ModulosUsuario.Interfaces.Repositories
         IEnumerable<MaterialTransaction> GetByMaterialId(int materialId);
 
         MaterialTransaction GetById(int materialTransactionId);
+
+        IEnumerable<MaterialTransaction> GetByStockId(int stockId);
     }
 }

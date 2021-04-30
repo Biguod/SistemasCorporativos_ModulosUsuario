@@ -1,4 +1,5 @@
-﻿using ModulosUsuario.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using ModulosUsuario.Contexts;
 using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Models;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace ModulosUsuario.Repositories
 
         public IEnumerable<Product> GetAll()
         {
-            return context.Product.ToList(); 
+            return context.Product.Include(i => i.UnityType).ToList(); 
         }
 
         public Product Update(Product product)

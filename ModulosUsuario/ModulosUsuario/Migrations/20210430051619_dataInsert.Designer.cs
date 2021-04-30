@@ -10,8 +10,8 @@ using ModulosUsuario.Contexts;
 namespace ModulosUsuario.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20210425011817_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210430051619_dataInsert")]
+    partial class dataInsert
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -85,6 +85,9 @@ namespace ModulosUsuario.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -112,6 +115,39 @@ namespace ModulosUsuario.Migrations
                     b.ToTable("Material");
                 });
 
+            modelBuilder.Entity("ModulosUsuario.Models.MaterialTransaction", b =>
+                {
+                    b.Property<int>("MaterialTransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TransactionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnityValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("MaterialTransactionId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("StockId");
+
+                    b.HasIndex("TransactionTypeId");
+
+                    b.ToTable("MaterialTransaction");
+                });
+
             modelBuilder.Entity("ModulosUsuario.Models.Permissions", b =>
                 {
                     b.Property<int>("PermissionId")
@@ -135,6 +171,9 @@ namespace ModulosUsuario.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -151,7 +190,7 @@ namespace ModulosUsuario.Migrations
 
                     b.Property<string>("SKU")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Unity")
                         .HasColumnType("int");
@@ -161,12 +200,60 @@ namespace ModulosUsuario.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("SKU")
-                        .IsUnique();
-
                     b.HasIndex("UnityTypeId");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.ProductTransaction", b =>
+                {
+                    b.Property<int>("ProductTransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TransactionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnityValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ProductTransactionId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StockId");
+
+                    b.HasIndex("TransactionTypeId");
+
+                    b.ToTable("ProductTransaction");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.Stock", b =>
+                {
+                    b.Property<int>("StockId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StockId");
+
+                    b.HasIndex("BranchId")
+                        .IsUnique();
+
+                    b.ToTable("Stock");
                 });
 
             modelBuilder.Entity("ModulosUsuario.Models.Tools", b =>
@@ -201,6 +288,85 @@ namespace ModulosUsuario.Migrations
                     b.HasIndex("UnityTypeId");
 
                     b.ToTable("Tools");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.ToolsLog", b =>
+                {
+                    b.Property<int>("ToolsLogId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("FinalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InitialDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ToolsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ToolsLogId");
+
+                    b.HasIndex("ToolsId");
+
+                    b.ToTable("ToolsLog");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.ToolsTransaction", b =>
+                {
+                    b.Property<int>("ToolsTransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToolId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TransactionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnityValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ToolsTransactionId");
+
+                    b.HasIndex("StockId");
+
+                    b.HasIndex("ToolId");
+
+                    b.HasIndex("TransactionTypeId");
+
+                    b.ToTable("ToolsTransaction");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.TransactionType", b =>
+                {
+                    b.Property<int>("TransactionTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsIncoming")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TransactionTypeId");
+
+                    b.ToTable("TransactionType");
                 });
 
             modelBuilder.Entity("ModulosUsuario.Models.UnityType", b =>
@@ -256,7 +422,8 @@ namespace ModulosUsuario.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.HasKey("UserId");
 
@@ -303,6 +470,33 @@ namespace ModulosUsuario.Migrations
                     b.Navigation("UnityType");
                 });
 
+            modelBuilder.Entity("ModulosUsuario.Models.MaterialTransaction", b =>
+                {
+                    b.HasOne("ModulosUsuario.Models.Material", "Material")
+                        .WithMany("MaterialTransactions")
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModulosUsuario.Models.Stock", "Stock")
+                        .WithMany()
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModulosUsuario.Models.TransactionType", "TransactionType")
+                        .WithMany()
+                        .HasForeignKey("TransactionTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Material");
+
+                    b.Navigation("Stock");
+
+                    b.Navigation("TransactionType");
+                });
+
             modelBuilder.Entity("ModulosUsuario.Models.Product", b =>
                 {
                     b.HasOne("ModulosUsuario.Models.UnityType", "UnityType")
@@ -314,6 +508,44 @@ namespace ModulosUsuario.Migrations
                     b.Navigation("UnityType");
                 });
 
+            modelBuilder.Entity("ModulosUsuario.Models.ProductTransaction", b =>
+                {
+                    b.HasOne("ModulosUsuario.Models.Product", "Product")
+                        .WithMany("ProductTransactions")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModulosUsuario.Models.Stock", "Stock")
+                        .WithMany()
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModulosUsuario.Models.TransactionType", "TransactionType")
+                        .WithMany()
+                        .HasForeignKey("TransactionTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Stock");
+
+                    b.Navigation("TransactionType");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.Stock", b =>
+                {
+                    b.HasOne("ModulosUsuario.Models.Branch", "Branch")
+                        .WithOne("Stock")
+                        .HasForeignKey("ModulosUsuario.Models.Stock", "BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+                });
+
             modelBuilder.Entity("ModulosUsuario.Models.Tools", b =>
                 {
                     b.HasOne("ModulosUsuario.Models.UnityType", "UnityType")
@@ -323,6 +555,44 @@ namespace ModulosUsuario.Migrations
                         .IsRequired();
 
                     b.Navigation("UnityType");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.ToolsLog", b =>
+                {
+                    b.HasOne("ModulosUsuario.Models.Tools", "Tool")
+                        .WithMany("ToolsLogs")
+                        .HasForeignKey("ToolsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tool");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.ToolsTransaction", b =>
+                {
+                    b.HasOne("ModulosUsuario.Models.Stock", "Stock")
+                        .WithMany()
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModulosUsuario.Models.Tools", "Tool")
+                        .WithMany("ToolsTransactions")
+                        .HasForeignKey("ToolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModulosUsuario.Models.TransactionType", "TransactionType")
+                        .WithMany()
+                        .HasForeignKey("TransactionTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Stock");
+
+                    b.Navigation("Tool");
+
+                    b.Navigation("TransactionType");
                 });
 
             modelBuilder.Entity("ModulosUsuario.Models.UsersPermissions", b =>
@@ -342,9 +612,31 @@ namespace ModulosUsuario.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ModulosUsuario.Models.Branch", b =>
+                {
+                    b.Navigation("Stock");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.Material", b =>
+                {
+                    b.Navigation("MaterialTransactions");
+                });
+
             modelBuilder.Entity("ModulosUsuario.Models.Permissions", b =>
                 {
                     b.Navigation("UserPermissions");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.Product", b =>
+                {
+                    b.Navigation("ProductTransactions");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.Tools", b =>
+                {
+                    b.Navigation("ToolsLogs");
+
+                    b.Navigation("ToolsTransactions");
                 });
 
             modelBuilder.Entity("ModulosUsuario.Models.User", b =>

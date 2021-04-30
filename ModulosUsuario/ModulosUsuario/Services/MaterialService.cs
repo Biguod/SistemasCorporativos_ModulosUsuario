@@ -2,6 +2,7 @@
 using ModulosUsuario.Interfaces.Services;
 using ModulosUsuario.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ModulosUsuario.Services
 {
@@ -48,14 +49,12 @@ namespace ModulosUsuario.Services
 
         private Material CreateMaterial(Material material)
         {
-            materialRepository.Create(material);
-            return material;
+            return materialRepository.Create(material); ;
         }
 
         private Material UpdateMaterial(Material material)
         {
-            materialRepository.Update(material);
-            return material;
+            return materialRepository.Update(material); ;
         }
 
         public IEnumerable<MaterialTransaction> GetMaterialTransactions()
@@ -65,8 +64,7 @@ namespace ModulosUsuario.Services
 
         public MaterialTransaction CreateMaterialTransaction(MaterialTransaction materialTransaction)
         {
-            materialTransactionRepository.Create(materialTransaction);
-            return materialTransaction;
+            return materialTransactionRepository.Create(materialTransaction); ;
         }
 
         public MaterialTransaction GetByMaterialTransactionId(int materialTransactionId)

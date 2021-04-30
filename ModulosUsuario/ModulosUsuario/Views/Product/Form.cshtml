@@ -1,7 +1,12 @@
 ﻿@model ModulosUsuario.Models.Product
 @{ ViewData["Title"] = Model.ProductId == 0 ? "Criar Produto" : "Editar Produto"; }
 @{ 
-    var title = Model.ProductId == 0 ? "Criar" : "Editar";
+    var title = "Editar";
+    if (Model.ProductId == 0)
+    {
+        title = "Criar";
+        Model.Active = true;
+    }
 }
 <div class="box box-info">
     <div class="box-header with-border">
@@ -19,6 +24,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         @Html.HiddenFor(h => h.ProductId)
+                        @Html.HiddenFor(h => h.Active)
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label asp-for="SKU"></label>

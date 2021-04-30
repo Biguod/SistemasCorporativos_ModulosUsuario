@@ -72,7 +72,6 @@ namespace ModulosUsuario.Contexts
                 .WithMany(tt => tt.ToolsTransactions)
                 .HasForeignKey(tt => tt.ToolId)
                 .IsRequired();
-
         }
 
         public DbSet<User> Users { get; set; }

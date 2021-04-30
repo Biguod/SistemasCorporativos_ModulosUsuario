@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ModulosUsuario.Models
 {
@@ -16,9 +15,6 @@ namespace ModulosUsuario.Models
 
         [Required]
         public decimal UnityValue { get; set; }
-
-        [Required]
-        public decimal TotalValue { get; set; }
 
         [Required]
         public int TransactionTypeId { get; set; }

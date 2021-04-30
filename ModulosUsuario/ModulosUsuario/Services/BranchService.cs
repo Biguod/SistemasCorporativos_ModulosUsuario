@@ -8,9 +8,11 @@ namespace ModulosUsuario.Services
     public class BranchService : IBranchService
     {
         public readonly IBranchRepository branchRepository;
-        public BranchService(IBranchRepository branchRepository)
+        public readonly IStockRepository stockRepository;
+        public BranchService(IBranchRepository branchRepository, IStockRepository stockRepository)
         {
             this.branchRepository = branchRepository;
+            this.stockRepository = stockRepository;
         }
 
         public IEnumerable<Branch> GetBranches()
@@ -45,14 +47,17 @@ namespace ModulosUsuario.Services
 
         private Branch CreateBranch(Branch branch)
         {
-            branchRepository.Create(branch);
+            branch = branchRepository.Create(branch);
+
+            var stock = new Stock { BranchId = branch.BranchId, StockId = 0 };
+            stockRepository.Create(stock);
+
             return branch;
         }
 
         private Branch UpdateBranch(Branch branch)
         {
-            branchRepository.Update(branch);
-            return branch;
+            return branchRepository.Update(branch);
         }
     }
 }

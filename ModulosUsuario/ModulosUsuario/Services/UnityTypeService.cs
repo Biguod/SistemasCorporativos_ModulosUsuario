@@ -45,14 +45,12 @@ namespace ModulosUsuario.Services
 
         private UnityType CreateUnityType(UnityType unityType)
         {
-            unityTypeRepository.Create(unityType);
-            return unityType;
+            return unityTypeRepository.Create(unityType);
         }
 
         private UnityType UpdateUnityType(UnityType unityType)
         {
-            unityTypeRepository.Update(unityType);
-            return unityType;
+            return unityTypeRepository.Update(unityType); ;
         }
     }
 }

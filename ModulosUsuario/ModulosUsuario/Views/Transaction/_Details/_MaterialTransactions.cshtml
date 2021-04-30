@@ -1,0 +1,60 @@
+﻿@model TransactionsViewModel
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                Transações de Materiais
+            </button>
+            @Html.ActionLink("", "CreateMaterialTransaction", "Transaction", new { stockId = Model.Stock.StockId }, new { @class = "fas fa-plus-square float-right", title = "Nova Transação" })
+        </h5>
+    </div>
+    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+            <div class="row">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Material")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Quantidade")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Valor Unitário")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Valor Total")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Transação")
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.MaterialTransactions)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Material.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    R$@Html.DisplayFor(modelItem => item.UnityValue)
+                                </td>
+                                <td>
+                                    R$@(item.UnityValue * item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TransactionType.Description)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

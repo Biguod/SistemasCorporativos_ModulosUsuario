@@ -33,6 +33,8 @@ namespace ModulosUsuario
             services.AddScoped<IMaterialService, MaterialService>();
             services.AddScoped<IToolsService, ToolsService>();
             services.AddScoped<IBranchService, BranchService>();
+            services.AddScoped<IStockService, StockService>();
+            services.AddScoped<ITransactionService, TransactionService>();
 
             //repositories
             services.AddScoped<IUserRepository, UserRepository>();
@@ -41,6 +43,11 @@ namespace ModulosUsuario
             services.AddScoped<IMaterialRepository, MaterialRepository>();
             services.AddScoped<IToolsRepository, ToolsRepository>();
             services.AddScoped<IBranchRepository, BranchRepository>();
+            services.AddScoped<IMaterialTransactionRepository, MaterialTransactionRepository>();
+            services.AddScoped<IProductTransactionRepository, ProductTransactionRepository>();
+            services.AddScoped<IToolsTransactionRepository, ToolsTransactionRepository>();
+            services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<ITransactionTypeRepository, TransactionTypeRepository>();
 
             //database
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -60,7 +67,7 @@ namespace ModulosUsuario
                 app.UseHsts();
             }
 
-            //databaseContext.Database.Migrate();
+            databaseContext.Database.Migrate();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

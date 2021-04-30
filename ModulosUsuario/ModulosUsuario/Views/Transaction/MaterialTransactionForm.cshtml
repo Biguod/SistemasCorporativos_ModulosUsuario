@@ -1,0 +1,61 @@
+﻿@model ModulosUsuario.Models.MaterialTransaction
+@{ ViewData["Title"] = "Nova Transação de Material"; }
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Nova Transação de Material</h3>
+    </div>
+
+    <form asp-controller="Transaction" asp-action="CreateMaterialTransaction" asp-antiforgery="true" method="post">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="card-title">Informações da Transação</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.HiddenFor(h => h.MaterialTransactionId)
+                        @Html.HiddenFor(h => h.StockId)
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label asp-for="Material"></label>
+                                @Html.DropDownList("MaterialId", (IEnumerable<SelectListItem>)ViewBag.Materials, null, new { @class = "form-control" })
+                                <span asp-validation-for="MaterialId" class="field-validation-valid text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="Quantity"></label>
+                                <input type="number" asp-for="Quantity" class="form-control" placeholder="Digite a Quantidade" />
+                                <span asp-validation-for="Quantity" class="field-validation-valid text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="UnityValue"></label>
+                                <input asp-for="UnityValue" class="form-control" placeholder="Digite o Preço da Unidade" />
+                                <span asp-validation-for="UnityValue" class="field-validation-valid text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="TransactionType"></label>
+                                @Html.DropDownList("TransactionTypeId", (IEnumerable<SelectListItem>)ViewBag.TransactionTypes, null, new { @class = "form-control" })
+                                <span asp-validation-for="TransactionTypeId" class="field-validation-valid text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="text-align:end">
+                            <a asp-action="Index" class="btn btn-dark mr-2">Retornar</a>
+                            <input type="submit" class="btn btn-success" value="Salvar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

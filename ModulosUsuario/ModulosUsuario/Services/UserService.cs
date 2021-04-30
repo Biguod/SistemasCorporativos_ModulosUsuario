@@ -1,9 +1,7 @@
 ﻿using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Interfaces.Services;
 using ModulosUsuario.Models;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace ModulosUsuario.Services
 {
@@ -32,8 +30,8 @@ namespace ModulosUsuario.Services
 
         public User UpdateUser(User user)
         {
-            userRepository.Update(user);
-            return user;
+            
+            return userRepository.Update(user);
         }
 
         public void DeleteUser(int userId)

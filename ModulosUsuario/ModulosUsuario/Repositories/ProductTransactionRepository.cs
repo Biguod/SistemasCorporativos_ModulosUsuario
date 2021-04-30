@@ -1,10 +1,9 @@
-﻿using ModulosUsuario.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using ModulosUsuario.Contexts;
 using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ModulosUsuario.Repositories
 {
@@ -31,12 +30,32 @@ namespace ModulosUsuario.Repositories
 
         public ProductTransaction GetById(int productTransactionId)
         {
-            return context.ProductTransaction.Find(productTransactionId);
+            return context.ProductTransaction
+                .Where(w => w.ProductTransactionId == productTransactionId)
+                .Include(i => i.Stock)
+                .Include(i => i.Product)
+                .Include(i => i.TransactionType)
+                .FirstOrDefault();
         }
 
         public IEnumerable<ProductTransaction> GetByProductId(int productId)
         {
-            return context.ProductTransaction.Where(w => w.ProductId == productId).ToList();
+            return context.ProductTransaction
+                .Where(w => w.ProductId == productId)
+                .Include(i => i.Stock)
+                .Include(i => i.Product)
+                .Include(i => i.TransactionType)
+                .ToList();
+        }
+
+        public IEnumerable<ProductTransaction> GetByStockId(int stockId)
+        {
+            return context.ProductTransaction
+                .Where(w => w.StockId == stockId)
+                .Include(i => i.Stock)
+                .Include(i => i.Product)
+                .Include(i => i.TransactionType)
+                .ToList();
         }
     }
 }

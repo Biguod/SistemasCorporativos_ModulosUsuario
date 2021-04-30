@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TransactionListViewModel>
+@{ ViewData["Title"] = "Transações"; }
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header d-inline">
+                <h3 class="box-title">Gerencia Transações</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Stock.Branch.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TotalProductTransactions)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TotalMaterialTransactions)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TotalToolsTransactions)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Stock.Branch.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalProductTransactions)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalMaterialTransactions)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalToolsTransactions)
+                            </td>
+                            <td align="center">
+                                @Html.ActionLink("Detalhes", "Details", "Transaction", new { stockId = item.Stock.StockId }, new { @class = "btn btn-sm btn-primary" })
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

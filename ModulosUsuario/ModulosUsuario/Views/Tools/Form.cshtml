@@ -1,7 +1,12 @@
 ﻿@model ModulosUsuario.Models.Tools
 @{ ViewData["Title"] = Model.ToolsId == 0 ? "Criar Ferramenta" : "Editar Ferramenta"; }
-@{ 
-    var title = Model.ToolsId == 0 ? "Criar" : "Editar";
+@{
+    var title = "Editar";
+    if (Model.ToolsId == 0)
+    {
+        title = "Criar";
+        Model.Status = "Novo";
+    }
 }
 <div class="box box-info">
     <div class="box-header with-border">

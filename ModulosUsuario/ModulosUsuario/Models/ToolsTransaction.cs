@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ModulosUsuario.Models
 {
@@ -18,13 +17,14 @@ namespace ModulosUsuario.Models
         public decimal UnityValue { get; set; }
 
         [Required]
-        public decimal TotalValue { get; set; }
+        public int TransactionTypeId { get; set; }
 
         [Required]
-        public TransactionType TransactionTypeId { get; set; }
+        public int StockId { get; set; }
 
-        [Required]
-        public List<Stock> Stocks { get; set; }
+        public TransactionType TransactionType { get; set; }
+
+        public Stock Stock { get; set; }
 
         public Tools Tool { get; set; }
     }
