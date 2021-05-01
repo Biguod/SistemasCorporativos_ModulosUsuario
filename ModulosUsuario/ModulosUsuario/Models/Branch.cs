@@ -8,6 +8,7 @@ namespace ModulosUsuario.Models
         public int BranchId { get; set; }
 
         [Required]
+        [Display(Name = "Nome Filial")]
         public string Description { get; set; }
 
         public Stock Stock { get; set; }

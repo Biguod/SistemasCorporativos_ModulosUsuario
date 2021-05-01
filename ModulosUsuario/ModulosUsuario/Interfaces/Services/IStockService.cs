@@ -8,5 +8,7 @@ namespace ModulosUsuario.Interfaces.Services
         IEnumerable<Stock> GetStocks();
         Stock CreateStock(Stock stock);
         Stock GetStockById(int stockId);
+        IEnumerable<StockListViewModel> GetStockList();
+        StocksViewModel GetStockDetails(int stockId);
     }
 }

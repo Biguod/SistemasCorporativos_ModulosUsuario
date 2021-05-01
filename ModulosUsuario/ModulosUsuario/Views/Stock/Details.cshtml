@@ -1,0 +1,19 @@
+﻿@model StocksViewModel
+@{ ViewData["Title"] = "Detalhes dos Estoques"; }
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header d-inline">
+                <h3 class="box-title">Estoques da filial @Model.Stock.Branch.Description</h3>
+            </div>
+            <div class="box-body">
+                <div id="accordion">
+                    @Html.Partial("~/Views/Stock/_Details/_StockProduct.cshtml", Model)
+                    @Html.Partial("~/Views/Stock/_Details/_StockMaterial.cshtml", Model)
+                    @Html.Partial("~/Views/Stock/_Details/_StockTools.cshtml", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

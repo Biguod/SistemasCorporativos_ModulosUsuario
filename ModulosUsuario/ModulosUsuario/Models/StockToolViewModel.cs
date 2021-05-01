@@ -2,21 +2,21 @@
 
 namespace ModulosUsuario.Models
 {
-    public class StockToolsViewModel
+    public class StockToolViewModel
     {
         [Required]
-        public Tools Tools { get; set; }
+        public int ToolId { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string ToolName { get; set; }
 
         [Required]
-        public int Quantity { get; set; }
+        public int StockQuantity { get; set; }
 
         [Required]
         public decimal AverageCost { get; set; }
 
         [Required]
-        public Stock Stock { get; set; }
+        public int StockId { get; set; }
     }
 }

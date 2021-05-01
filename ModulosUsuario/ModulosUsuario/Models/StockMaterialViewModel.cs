@@ -5,18 +5,18 @@ namespace ModulosUsuario.Models
     public class StockMaterialViewModel
     {
         [Required]
-        public Material Material { get; set; }
+        public int MaterialId { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string MaterialName { get; set; }
 
         [Required]
-        public int Quantity { get; set; }
+        public int StockQuantity { get; set; }
 
         [Required]
         public decimal AverageCost { get; set; }
 
         [Required]
-        public Stock Stock { get; set; }
+        public int StockId { get; set; }
     }
 }

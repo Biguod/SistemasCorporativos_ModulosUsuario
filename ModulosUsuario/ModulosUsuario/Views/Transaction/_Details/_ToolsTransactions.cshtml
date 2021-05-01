@@ -29,6 +29,8 @@
                             <th>
                                 @Html.DisplayName("Transação")
                             </th>
+                            <th>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,6 +51,12 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.TransactionType.Description)
+                                </td>
+                                <td align="center">
+                                    @if ("Furto" != item.TransactionType.Description)
+                                    {
+                                        @Html.ActionLink("", "DownloadDocumentTools", "Transaction", new { toolsTransactionId = item.ToolsTransactionId }, new { @class = "fas fa-file-download", title = "Download documento fiscal" })
+                                    }
                                 </td>
                             </tr>
                         }

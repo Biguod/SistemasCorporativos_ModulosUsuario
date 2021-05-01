@@ -74,5 +74,19 @@ namespace ModulosUsuario.Services
             toolsTransaction = toolsTransactionRepository.GetById(toolsTransaction.ToolsTransactionId);
             return toolsTransaction;
         }
+
+        public ProductTransaction GetProductTransaction(int productTransactionId)
+        {
+            return productTransactionRepository.GetById(productTransactionId);
+        }
+
+        public ToolsTransaction GetToolTransaction(int toolsTransactionId)
+        {
+            return toolsTransactionRepository.GetById(toolsTransactionId);
+        }
+        public MaterialTransaction GetMaterialTransaction(int materialTransactionId)
+        {
+            return materialTransactionRepository.GetById(materialTransactionId);
+        }
     }
 }
