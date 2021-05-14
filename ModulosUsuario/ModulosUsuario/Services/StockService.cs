@@ -67,5 +67,10 @@ namespace ModulosUsuario.Services
             };
         }
 
+        public StockProductViewModel GetProductInStockById(int stockId, int productId)
+        {
+            return stockRepository.GetProductInStockById(stockId, productId);
+        }
+
     }
 }

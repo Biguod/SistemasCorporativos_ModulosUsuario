@@ -10,5 +10,7 @@ namespace ModulosUsuario.Interfaces.Services
         Stock GetStockById(int stockId);
         IEnumerable<StockListViewModel> GetStockList();
         StocksViewModel GetStockDetails(int stockId);
+        StockProductViewModel GetProductInStockById(int stockId, int productId);
+
     }
 }

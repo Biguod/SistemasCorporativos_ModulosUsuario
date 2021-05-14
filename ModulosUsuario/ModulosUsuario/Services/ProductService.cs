@@ -1,6 +1,7 @@
 ﻿using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Interfaces.Services;
 using ModulosUsuario.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,10 +11,17 @@ namespace ModulosUsuario.Services
     {
         public readonly IProductRepository productRepository;
         public readonly IProductTransactionRepository productTransactionRepository;
-        public ProductService(IProductRepository productRepository, IProductTransactionRepository productTransactionRepository)
+        public readonly ITransactionService transactionService;
+        public readonly IStockService stockService;
+        public ProductService(IProductRepository productRepository, 
+            IProductTransactionRepository productTransactionRepository, 
+            ITransactionService transactionService, 
+            IStockService stockService)
         {
             this.productRepository = productRepository;
             this.productTransactionRepository = productTransactionRepository;
+            this.transactionService = transactionService;
+            this.stockService = stockService;
         }
 
         public IEnumerable<Product> GetProducts()
@@ -64,7 +72,21 @@ namespace ModulosUsuario.Services
 
         public ProductTransaction CreateProductTransaction(ProductTransaction productTransaction)
         {
-            return productTransactionRepository.Create(productTransaction); ;
+            try
+            {
+                var transactionType = transactionService.GetTransactionTypeById(productTransaction.TransactionTypeId);
+                var productInStock = stockService.GetProductInStockById(productTransaction.StockId, productTransaction.ProductId);
+                if (!transactionType.IsIncoming && productInStock.StockQuantity < productTransaction.Quantity)
+                {
+                    throw new InvalidOperationException();
+                }
+                return productTransactionRepository.Create(productTransaction);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         public ProductTransaction GetByProductTransactionId(int productTransactionId)

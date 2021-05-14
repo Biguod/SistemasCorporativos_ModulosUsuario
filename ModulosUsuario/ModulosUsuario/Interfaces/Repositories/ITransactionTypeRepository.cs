@@ -6,5 +6,6 @@ namespace ModulosUsuario.Interfaces.Repositories
     public interface ITransactionTypeRepository
     {
         IEnumerable<TransactionType> GetAll();
+        TransactionType GetTransactionTypeById(int transactionTypeId);
     }
 }

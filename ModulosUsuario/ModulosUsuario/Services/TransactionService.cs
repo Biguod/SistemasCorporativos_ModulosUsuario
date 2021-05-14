@@ -1,6 +1,8 @@
 ﻿using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Interfaces.Services;
 using ModulosUsuario.Models;
+using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -87,6 +89,15 @@ namespace ModulosUsuario.Services
         public MaterialTransaction GetMaterialTransaction(int materialTransactionId)
         {
             return materialTransactionRepository.GetById(materialTransactionId);
+        }
+        public TransactionType GetTransactionTypeById(int transactionTypeId)
+        {
+            var transactionType = transactionTypeRepository.GetTransactionTypeById(transactionTypeId);
+            if (transactionType == null)
+            {
+                throw new ArgumentNullException();
+            }
+            return transactionType;
         }
     }
 }

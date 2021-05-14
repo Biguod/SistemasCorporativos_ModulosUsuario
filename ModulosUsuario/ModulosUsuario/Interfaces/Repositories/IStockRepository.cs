@@ -11,5 +11,7 @@ namespace ModulosUsuario.Interfaces.Repositories
         IEnumerable<StockProductViewModel> GetProductsById(int stockId);
         IEnumerable<StockMaterialViewModel> GetMaterialsById(int stockId);
         IEnumerable<StockToolViewModel> GetToolsById(int stockId);
+        StockProductViewModel GetProductInStockById(int stockId, int productId);
+
     }
 }
