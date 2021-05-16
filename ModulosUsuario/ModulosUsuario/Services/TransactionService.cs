@@ -15,18 +15,21 @@ namespace ModulosUsuario.Services
         public readonly IMaterialTransactionRepository materialTransactionRepository;
         public readonly IToolsTransactionRepository toolsTransactionRepository;
         public readonly ITransactionTypeRepository transactionTypeRepository;
+        public readonly IStockService stockService;
 
         public TransactionService(IStockRepository stockRepository,
             IProductTransactionRepository productTransactionRepository,
             IMaterialTransactionRepository materialTransactionRepository,
             IToolsTransactionRepository toolsTransactionRepository,
-            ITransactionTypeRepository transactionTypeRepository)
+            ITransactionTypeRepository transactionTypeRepository,
+            IStockService stockService)
         {
             this.stockRepository = stockRepository;
             this.productTransactionRepository = productTransactionRepository;
             this.materialTransactionRepository = materialTransactionRepository;
             this.toolsTransactionRepository = toolsTransactionRepository;
             this.transactionTypeRepository = transactionTypeRepository;
+            this.stockService = stockService;
         }
 
         public IEnumerable<TransactionListViewModel> GetTransactionsList()
@@ -58,9 +61,21 @@ namespace ModulosUsuario.Services
 
         public ProductTransaction CreateProductTransaction(ProductTransaction productTransaction)
         {
-            productTransaction = productTransactionRepository.Create(productTransaction);
-            productTransaction = productTransactionRepository.GetById(productTransaction.ProductTransactionId);
-            return productTransaction;
+            try
+            {
+                var transactionType = GetTransactionTypeById(productTransaction.TransactionTypeId);
+                var productInStock = stockService.GetProductInStockById(productTransaction.StockId, productTransaction.ProductId);
+                if (!transactionType.IsIncoming && productInStock.StockQuantity < productTransaction.Quantity)
+                {
+                    throw new InvalidOperationException();
+                }
+                productTransaction = productTransactionRepository.Create(productTransaction);
+                return productTransactionRepository.GetById(productTransaction.ProductTransactionId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public MaterialTransaction CreateMaterialTransaction(MaterialTransaction materialTransaction)

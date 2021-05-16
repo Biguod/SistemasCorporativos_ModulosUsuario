@@ -44,16 +44,24 @@ namespace ModulosUsuario.Controllers
         [HttpPost]
         public ActionResult CreateProductTransaction(ProductTransaction productTransaction)
         {
-            if (this.ModelState.IsValid)
+            try
             {
-                productTransaction = transactionService.CreateProductTransaction(productTransaction);
-                return RedirectToAction("Details", new { stockId = productTransaction.StockId });
+                if (this.ModelState.IsValid)
+                {
+                    productTransaction = transactionService.CreateProductTransaction(productTransaction);
+                    return RedirectToAction("Details", new { stockId = productTransaction.StockId });
+                }
+
+                ViewBag.TransactionTypes = new SelectList(transactionService.GetTransactionTypeList(), "TransactionTypeId", "Description");
+                ViewBag.Products = new SelectList(productService.GetProducts(), "ProductId", "Name");
+
+                return View("ProductTransactionForm", productTransaction);
             }
-
-            ViewBag.TransactionTypes = new SelectList(transactionService.GetTransactionTypeList(), "TransactionTypeId", "Description");
-            ViewBag.Products = new SelectList(productService.GetProducts(), "ProductId", "Name");
-
-            return View("ProductTransactionForm", productTransaction);
+            catch (System.Exception)
+            {
+                return BadRequest();
+            }
+            
         }
 
         public ActionResult CreateProductTransaction(int stockId)

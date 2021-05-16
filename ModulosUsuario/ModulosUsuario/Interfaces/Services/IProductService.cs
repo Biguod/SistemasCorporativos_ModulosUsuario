@@ -10,7 +10,6 @@ namespace ModulosUsuario.Interfaces.Services
         void DeleteProduct(int productId);
         Product GetProductById(int productId);
         IEnumerable<ProductTransaction> GetProductTransactions();
-        ProductTransaction CreateProductTransaction(ProductTransaction productTransaction);
         ProductTransaction GetByProductTransactionId(int productTransactionId);
         IEnumerable<ProductTransaction> GetTransactionsByProductId(int productId);
     }

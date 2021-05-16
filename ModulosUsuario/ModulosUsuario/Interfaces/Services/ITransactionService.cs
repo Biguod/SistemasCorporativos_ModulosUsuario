@@ -1,4 +1,5 @@
-﻿using ModulosUsuario.Models;
+﻿
+using ModulosUsuario.Models;
 using System.Collections.Generic;
 
 namespace ModulosUsuario.Interfaces.Services

@@ -50,6 +50,7 @@ namespace ModulosUsuario.Services
         {
             if (product.ProductId == 0)
             {
+                //Console.WriteLine(product);
                 return CreateProduct(product);
             }
             return UpdateProduct(product);
@@ -68,25 +69,6 @@ namespace ModulosUsuario.Services
         public IEnumerable<ProductTransaction> GetProductTransactions()
         {
             return productTransactionRepository.GetAll();
-        }
-
-        public ProductTransaction CreateProductTransaction(ProductTransaction productTransaction)
-        {
-            try
-            {
-                var transactionType = transactionService.GetTransactionTypeById(productTransaction.TransactionTypeId);
-                var productInStock = stockService.GetProductInStockById(productTransaction.StockId, productTransaction.ProductId);
-                if (!transactionType.IsIncoming && productInStock.StockQuantity < productTransaction.Quantity)
-                {
-                    throw new InvalidOperationException();
-                }
-                return productTransactionRepository.Create(productTransaction);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
         }
 
         public ProductTransaction GetByProductTransactionId(int productTransactionId)
