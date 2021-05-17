@@ -2,13 +2,13 @@
 
 namespace ModulosUsuario.Models
 {
-    public class StockMaterialViewModel
+    public class StockToolViewModel
     {
         [Required]
-        public int MaterialId { get; set; }
+        public int ToolId { get; set; }
 
         [Required]
-        public string MaterialName { get; set; }
+        public string ToolName { get; set; }
 
         [Required]
         public int StockQuantity { get; set; }

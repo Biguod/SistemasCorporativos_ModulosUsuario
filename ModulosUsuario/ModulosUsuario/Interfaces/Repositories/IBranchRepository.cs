@@ -13,5 +13,7 @@ namespace ModulosUsuario.Interfaces.Repositories
         Branch GetById(int branchId);
 
         void Delete(Branch branch);
+
+        Branch GetByDescription(string description);
     }
 }

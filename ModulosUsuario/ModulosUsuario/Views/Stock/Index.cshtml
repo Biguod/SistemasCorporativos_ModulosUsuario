@@ -1,0 +1,37 @@
+﻿@model IEnumerable<StockListViewModel>
+@{ ViewData["Title"] = "Estoque"; }
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header d-inline">
+                <h3 class="box-title">Gerenciar Estoque</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Stock.Branch.Description)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Stock.Branch.Description)
+                            </td>
+                            <td align="center">
+                                @Html.ActionLink("Detalhes", "Details", "Stock", new { stockId = item.Stock.StockId }, new { @class = "btn btn-sm btn-primary" })
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

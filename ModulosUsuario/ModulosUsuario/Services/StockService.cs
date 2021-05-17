@@ -35,20 +35,20 @@ namespace ModulosUsuario.Services
         public Stock GetStockById(int stockId)
         {
             var stock = stockRepository.GetById(stockId);
-            
+
             return stock;
         }
 
         public Stock CreateStock(Stock stock)
         {
-            if(stock.StockId == 0)
+            if (stock.StockId == 0)
             {
                 return stockRepository.Create(stock); ;
             }
             return stock; //exception!!!
         }
 
-        public IEnumerable<StockListViewModel> GetTransactionsList() //revisar
+        public IEnumerable<StockListViewModel> GetStockList()
         {
             return stockRepository.GetAll().Select(s => new StockListViewModel
             {
@@ -58,13 +58,24 @@ namespace ModulosUsuario.Services
 
         public StocksViewModel GetStockDetails(int stockId)
         {
-            return new StocksViewModel();
-            //{
-            //    Stock = stockRepository.GetById(stockId),
-            //    StockProducts = productTransactionRepository.GetByStockId(stockId).ToList(),
-            //    StockMaterials = materialTransactionRepository.GetByStockId(stockId).ToList(),
-            //    StockTools = toolsTransactionRepository.GetByStockId(stockId).ToList(),
-            //};
+            return new StocksViewModel
+            {
+                Stock = stockRepository.GetById(stockId),
+                StockProducts = stockRepository.GetProductsById(stockId).ToList(),
+                StockMaterials = stockRepository.GetMaterialsById(stockId).ToList(),
+                StockTools = stockRepository.GetToolsById(stockId).ToList(),
+            };
         }
+
+        public StockProductViewModel GetProductInStockById(int stockId, int productId)
+        {
+            return stockRepository.GetProductInStockById(stockId, productId);
+        }
+
+        public StockMaterialViewModel GetMaterialInStockById(int stockId, int materialId)
+        {
+            return stockRepository.GetMaterialInStockById(stockId, materialId);
+        }
+
     }
 }

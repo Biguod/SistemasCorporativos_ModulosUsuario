@@ -20,7 +20,7 @@
                         @Html.HiddenFor(h => h.StockId)
                         <div class="row">
                             <div class="form-group col-md-3">
-                                <label asp-for="Tool"></label>
+                                <label asp-for="Tool">Ferramenta</label>
                                 @Html.DropDownList("ToolId", (IEnumerable<SelectListItem>)ViewBag.Tools, null, new { @class = "form-control" })
                                 <span asp-validation-for="ToolId" class="field-validation-valid text-danger"></span>
                             </div>
@@ -35,7 +35,7 @@
                                 <span asp-validation-for="UnityValue" class="field-validation-valid text-danger"></span>
                             </div>
                             <div class="form-group col-md-3">
-                                <label asp-for="TransactionType"></label>
+                                <label asp-for="TransactionType">Tipo de Transação</label>
                                 @Html.DropDownList("TransactionTypeId", (IEnumerable<SelectListItem>)ViewBag.TransactionTypes, null, new { @class = "form-control" })
                                 <span asp-validation-for="TransactionTypeId" class="field-validation-valid text-danger"></span>
                             </div>

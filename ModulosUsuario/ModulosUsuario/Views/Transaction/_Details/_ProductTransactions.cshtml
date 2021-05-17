@@ -6,7 +6,7 @@
             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                 Transações de Produtos
             </button>
-            @Html.ActionLink("", "CreateProductTransaction", "Transaction", new { stockId = Model.Stock.StockId  }, new { @class = "fas fa-plus-square float-right", title = "Nova Transação" })
+            @Html.ActionLink("", "CreateProductTransaction", "Transaction", new { stockId = Model.Stock.StockId }, new { @class = "fas fa-plus-square float-right", title = "Nova Transação" })
         </h5>
     </div>
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
@@ -30,6 +30,8 @@
                             <th>
                                 @Html.DisplayName("Transação")
                             </th>
+                            <th>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,6 +52,12 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.TransactionType.Description)
+                                </td>
+                                <td align="center">
+                                    @if ("Furto" != item.TransactionType.Description)
+                                    {
+                                        @Html.ActionLink("", "DownloadDocumentProduct", "Transaction", new { productTransactionId = item.ProductTransactionId }, new { @class = "fas fa-file-download", title = "Download documento fiscal" })
+                                    }
                                 </td>
                             </tr>
                         }

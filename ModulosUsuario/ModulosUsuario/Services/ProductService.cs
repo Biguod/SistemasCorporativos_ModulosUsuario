@@ -1,6 +1,7 @@
 ﻿using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Interfaces.Services;
 using ModulosUsuario.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,10 +11,17 @@ namespace ModulosUsuario.Services
     {
         public readonly IProductRepository productRepository;
         public readonly IProductTransactionRepository productTransactionRepository;
-        public ProductService(IProductRepository productRepository, IProductTransactionRepository productTransactionRepository)
+        public readonly ITransactionService transactionService;
+        public readonly IStockService stockService;
+        public ProductService(IProductRepository productRepository, 
+            IProductTransactionRepository productTransactionRepository, 
+            ITransactionService transactionService, 
+            IStockService stockService)
         {
             this.productRepository = productRepository;
             this.productTransactionRepository = productTransactionRepository;
+            this.transactionService = transactionService;
+            this.stockService = stockService;
         }
 
         public IEnumerable<Product> GetProducts()
@@ -42,6 +50,7 @@ namespace ModulosUsuario.Services
         {
             if (product.ProductId == 0)
             {
+                //Console.WriteLine(product);
                 return CreateProduct(product);
             }
             return UpdateProduct(product);
@@ -60,11 +69,6 @@ namespace ModulosUsuario.Services
         public IEnumerable<ProductTransaction> GetProductTransactions()
         {
             return productTransactionRepository.GetAll();
-        }
-
-        public ProductTransaction CreateProductTransaction(ProductTransaction productTransaction)
-        {
-            return productTransactionRepository.Create(productTransaction); ;
         }
 
         public ProductTransaction GetByProductTransactionId(int productTransactionId)

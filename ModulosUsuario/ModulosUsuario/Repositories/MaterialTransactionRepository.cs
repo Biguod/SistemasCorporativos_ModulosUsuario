@@ -35,6 +35,7 @@ namespace ModulosUsuario.Repositories
                 .Include(i => i.Stock)
                 .Include(i => i.Material)
                 .Include(i => i.TransactionType)
+                .Include("Stock.Branch")
                 .FirstOrDefault();
         }
 

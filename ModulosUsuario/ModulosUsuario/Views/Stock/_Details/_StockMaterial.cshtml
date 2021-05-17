@@ -1,0 +1,53 @@
+﻿@model StocksViewModel
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                Estoque de Materiais
+            </button>
+        </h5>
+    </div>
+    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+            <div class="row">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Id do Material")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Material")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Preço médio")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Quantidade em estoque")
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.StockMaterials)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modalItem => item.MaterialId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaterialName)
+                                </td>
+                                <td>
+                                    R$@Html.DisplayFor(modelItem => item.AverageCost)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StockQuantity)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -41,6 +41,14 @@ namespace ModulosUsuario.Repositories
             return branch;
         }
 
+        public Branch GetByDescription(string description)
+        {
+            var branch = context.Branch.Find(description);
+            if (branch == null)
+                branch = new Branch();
+            return branch;
+        }
+
         public void Delete(Branch branch)
         {
             context.Remove(branch);

@@ -1,6 +1,8 @@
 ﻿using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Interfaces.Services;
 using ModulosUsuario.Models;
+using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,18 +15,21 @@ namespace ModulosUsuario.Services
         public readonly IMaterialTransactionRepository materialTransactionRepository;
         public readonly IToolsTransactionRepository toolsTransactionRepository;
         public readonly ITransactionTypeRepository transactionTypeRepository;
+        public readonly IStockService stockService;
 
         public TransactionService(IStockRepository stockRepository,
             IProductTransactionRepository productTransactionRepository,
             IMaterialTransactionRepository materialTransactionRepository,
             IToolsTransactionRepository toolsTransactionRepository,
-            ITransactionTypeRepository transactionTypeRepository)
+            ITransactionTypeRepository transactionTypeRepository,
+            IStockService stockService)
         {
             this.stockRepository = stockRepository;
             this.productTransactionRepository = productTransactionRepository;
             this.materialTransactionRepository = materialTransactionRepository;
             this.toolsTransactionRepository = toolsTransactionRepository;
             this.transactionTypeRepository = transactionTypeRepository;
+            this.stockService = stockService;
         }
 
         public IEnumerable<TransactionListViewModel> GetTransactionsList()
@@ -56,16 +61,40 @@ namespace ModulosUsuario.Services
 
         public ProductTransaction CreateProductTransaction(ProductTransaction productTransaction)
         {
-            productTransaction = productTransactionRepository.Create(productTransaction);
-            productTransaction = productTransactionRepository.GetById(productTransaction.ProductTransactionId);
-            return productTransaction;
+            try
+            {
+                var transactionType = GetTransactionTypeById(productTransaction.TransactionTypeId);
+                var productInStock = stockService.GetProductInStockById(productTransaction.StockId, productTransaction.ProductId);
+                if (!transactionType.IsIncoming && productInStock.StockQuantity < productTransaction.Quantity)
+                {
+                    throw new InvalidOperationException();
+                }
+                productTransaction = productTransactionRepository.Create(productTransaction);
+                return productTransactionRepository.GetById(productTransaction.ProductTransactionId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public MaterialTransaction CreateMaterialTransaction(MaterialTransaction materialTransaction)
         {
-            materialTransaction = materialTransactionRepository.Create(materialTransaction);
-            materialTransaction = materialTransactionRepository.GetById(materialTransaction.MaterialTransactionId);
-            return materialTransaction;
+            try
+            {
+                var transactionType = GetTransactionTypeById(materialTransaction.TransactionTypeId);
+                var materialInStock = stockService.GetMaterialInStockById(materialTransaction.StockId, materialTransaction.MaterialId);
+                if (!transactionType.IsIncoming && materialInStock.StockQuantity < materialTransaction.Quantity)
+                {
+                    throw new InvalidOperationException();
+                }
+                materialTransaction = materialTransactionRepository.Create(materialTransaction);
+                return materialTransactionRepository.GetById(materialTransaction.MaterialTransactionId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public ToolsTransaction CreateToolTransaction(ToolsTransaction toolsTransaction)
@@ -73,6 +102,29 @@ namespace ModulosUsuario.Services
             toolsTransaction = toolsTransactionRepository.Create(toolsTransaction);
             toolsTransaction = toolsTransactionRepository.GetById(toolsTransaction.ToolsTransactionId);
             return toolsTransaction;
+        }
+
+        public ProductTransaction GetProductTransaction(int productTransactionId)
+        {
+            return productTransactionRepository.GetById(productTransactionId);
+        }
+
+        public ToolsTransaction GetToolTransaction(int toolsTransactionId)
+        {
+            return toolsTransactionRepository.GetById(toolsTransactionId);
+        }
+        public MaterialTransaction GetMaterialTransaction(int materialTransactionId)
+        {
+            return materialTransactionRepository.GetById(materialTransactionId);
+        }
+        public TransactionType GetTransactionTypeById(int transactionTypeId)
+        {
+            var transactionType = transactionTypeRepository.GetTransactionTypeById(transactionTypeId);
+            if (transactionType == null)
+            {
+                throw new ArgumentNullException();
+            }
+            return transactionType;
         }
     }
 }

@@ -56,5 +56,10 @@ namespace ModulosUsuario.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Logs(int toolsId)
+        {
+            return View(new Tools {ToolsId = 0});
+        }
+
     }
 }

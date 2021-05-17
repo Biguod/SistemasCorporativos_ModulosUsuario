@@ -19,5 +19,10 @@ namespace ModulosUsuario.Repositories
             return context.TransactionType.ToList();
         }
 
+        public TransactionType GetTransactionTypeById(int transactionTypeId)
+        {
+            return context.TransactionType.Find(transactionTypeId);
+        }
+
     }
 }

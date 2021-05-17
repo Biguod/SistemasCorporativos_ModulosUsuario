@@ -10,13 +10,16 @@ namespace ModulosUsuario.Models
         public int ToolsId { get; set; }
 
         [Required]
+        [Display(Name = "Nome")]
         public string Name { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Data de Vencimento")]
         public DateTime DueDate { get; set; }
 
         [Required]
+        [Display(Name = "Unidade")]
         public int Unity { get; set; }
 
         [Required]
@@ -26,6 +29,7 @@ namespace ModulosUsuario.Models
         public string Status { get; set; } // Talvez usar um Int para os Status e cada numero equivale a um status ?
 
         [Required]
+        [Display(Name = "Preço de custo")]
         public decimal PriceCost { get; set; }
 
         public virtual UnityType UnityType { get; set; }

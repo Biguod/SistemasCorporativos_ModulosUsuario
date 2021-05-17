@@ -8,12 +8,15 @@ namespace ModulosUsuario.Models
         public int ProductTransactionId { get; set; }
 
         [Required]
+        [Display(Name = "Produto")]
         public int ProductId { get; set; }
 
         [Required]
+        [Display(Name = "Quantidade")]
         public int Quantity { get; set; }
 
         [Required]
+        [Display(Name = "Valor unitário")]
         public decimal UnityValue { get; set; }
 
         [Required]

@@ -1,6 +1,7 @@
 ﻿using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Interfaces.Services;
 using ModulosUsuario.Models;
+using System;
 using System.Collections.Generic;
 
 namespace ModulosUsuario.Services
@@ -36,13 +37,27 @@ namespace ModulosUsuario.Services
             return branch;
         }
 
+        public Branch GetBranchByDescription(string description)
+        {
+            var branch = branchRepository.GetByDescription(description);
+
+            return branch;
+        }
+
         public Branch CreateOrEditBranch(Branch branch)
         {
-            if(branch.BranchId == 0)
+            try
             {
-                return CreateBranch(branch);
+                if (branch.BranchId == 0 && branch.Description.ToUpper() == GetBranchByDescription(branch.Description).Description.ToUpper())
+                {
+                    return CreateBranch(branch);
+                }
+                return UpdateBranch(branch);
             }
-            return UpdateBranch(branch);
+            catch (Exception ex)
+            {
+                throw ex;
+            }            
         }
 
         private Branch CreateBranch(Branch branch)
