@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using System.Linq;
+using ModulosUsuario.Exceptions;
 
 namespace ModulosUsuario.Services
 {
@@ -67,14 +68,14 @@ namespace ModulosUsuario.Services
                 var productInStock = stockService.GetProductInStockById(productTransaction.StockId, productTransaction.ProductId);
                 if (!transactionType.IsIncoming && productInStock.StockQuantity < productTransaction.Quantity)
                 {
-                    throw new InvalidOperationException();
+                    throw new LesserStockException();
                 }
                 productTransaction = productTransactionRepository.Create(productTransaction);
                 return productTransactionRepository.GetById(productTransaction.ProductTransactionId);
             }
-            catch (Exception ex)
+            catch (LesserStockException ex)
             {
-                throw ex;
+                throw new LesserStockException(ex.Message);
             }
         }
 
