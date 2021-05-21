@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using System.Linq;
+using ModulosUsuario.Exceptions;
 
 namespace ModulosUsuario.Services
 {
@@ -67,34 +68,22 @@ namespace ModulosUsuario.Services
                 var productInStock = stockService.GetProductInStockById(productTransaction.StockId, productTransaction.ProductId);
                 if (!transactionType.IsIncoming && productInStock.StockQuantity < productTransaction.Quantity)
                 {
-                    throw new InvalidOperationException();
+                    throw new LesserStockException();
                 }
                 productTransaction = productTransactionRepository.Create(productTransaction);
                 return productTransactionRepository.GetById(productTransaction.ProductTransactionId);
             }
-            catch (Exception ex)
+            catch (LesserStockException ex)
             {
-                throw ex;
+                throw new LesserStockException(ex.Message);
             }
         }
 
         public MaterialTransaction CreateMaterialTransaction(MaterialTransaction materialTransaction)
         {
-            try
-            {
-                var transactionType = GetTransactionTypeById(materialTransaction.TransactionTypeId);
-                var materialInStock = stockService.GetMaterialInStockById(materialTransaction.StockId, materialTransaction.MaterialId);
-                if (!transactionType.IsIncoming && materialInStock.StockQuantity < materialTransaction.Quantity)
-                {
-                    throw new InvalidOperationException();
-                }
-                materialTransaction = materialTransactionRepository.Create(materialTransaction);
-                return materialTransactionRepository.GetById(materialTransaction.MaterialTransactionId);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            materialTransaction = materialTransactionRepository.Create(materialTransaction);
+            materialTransaction = materialTransactionRepository.GetById(materialTransaction.MaterialTransactionId);
+            return materialTransaction;
         }
 
         public ToolsTransaction CreateToolTransaction(ToolsTransaction toolsTransaction)

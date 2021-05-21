@@ -50,16 +50,23 @@ namespace ModulosUsuarioTests.Services
             _stock = new Stock { StockId = 1, BranchId = 1 };
             _transactionType = new TransactionType { TransactionTypeId = 1, Description = "Description", IsIncoming = true };
 
-            _productTransaction = new ProductTransaction { ProductTransactionId = 1, ProductId = 1, Quantity = 10, UnityValue = 10, TransactionTypeId = 1, StockId = 1, Product = _product, Stock = _stock, TransactionType = _transactionType };
+            _productTransaction = new ProductTransaction { ProductTransactionId = 1,
+                ProductId = 1,
+                Quantity = 10, 
+                UnityValue = 10,
+                TransactionTypeId = 1,
+                StockId = 1,
+                Product = _product,
+                Stock = _stock,
+                TransactionType = _transactionType
+            };
        
         }
 
         [Test]
-        public void CreateProductTransaction_WhenCalled_ShouldReturnProductTransaction()
-        {
-            
+        public void CreateProductTransaction_WhenCalled_ShouldCreateProductTransaction()
+        {   //aaa Arrange Act Assert         
             _productTransactionRepository.Setup(s => s.Create(_productTransaction)).Returns(_productTransaction);
-
             var transactionTypeId = _transactionTypeRepository.Setup(s => s.GetTransactionTypeById(1)).Returns(_transactionType);
             var productInStock = _stockService.Setup(s => s.GetProductInStockById(1, 1)).Returns(new StockProductViewModel()
                 {
@@ -70,6 +77,7 @@ namespace ModulosUsuarioTests.Services
                     StockId = 1
                 });
             _productTransactionRepository.Setup(s => s.GetById(It.IsAny<int>())).Returns(_productTransaction);
+
             var result = _transactionService.CreateProductTransaction(_productTransaction);
 
             Assert.That(result, Is.Not.Null);
@@ -78,6 +86,47 @@ namespace ModulosUsuarioTests.Services
             _productTransactionRepository.Verify(v => v.GetById(It.IsAny<int>()), Times.Once);
             Assert.That(productTransactionResult.ProductId, Is.EqualTo(1));
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [Test]
         public void CreateProductTransaction_WhenProductInStockIsLessThenProductTransactionQuantity_ShouldReturnInvalidOperationRequest()
