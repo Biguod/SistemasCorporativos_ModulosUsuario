@@ -1,8 +1,10 @@
-﻿using ModulosUsuario.Interfaces.Repositories;
+﻿using Microsoft.AspNetCore.Hosting;
+using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Interfaces.Services;
 using ModulosUsuario.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace ModulosUsuario.Services
@@ -13,15 +15,19 @@ namespace ModulosUsuario.Services
         public readonly IProductTransactionRepository productTransactionRepository;
         public readonly ITransactionService transactionService;
         public readonly IStockService stockService;
-        public ProductService(IProductRepository productRepository, 
-            IProductTransactionRepository productTransactionRepository, 
-            ITransactionService transactionService, 
-            IStockService stockService)
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public ProductService(IProductRepository productRepository,
+            IProductTransactionRepository productTransactionRepository,
+            ITransactionService transactionService,
+            IStockService stockService,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.productRepository = productRepository;
             this.productTransactionRepository = productTransactionRepository;
             this.transactionService = transactionService;
             this.stockService = stockService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public IEnumerable<Product> GetProducts()
@@ -48,6 +54,8 @@ namespace ModulosUsuario.Services
 
         public Product CreateOrEditProduct(Product product)
         {
+            string uniqueFileName = UploadedFile(product);
+            product.ProductImage = uniqueFileName;
             if (product.ProductId == 0)
             {
                 //Console.WriteLine(product);
@@ -84,19 +92,21 @@ namespace ModulosUsuario.Services
             return productTransactionRepository.GetByProductId(productId);
         }
 
-        //private IEnumerable<ProductTransaction> GetIncomingTransaction(int stockId, int productId)
-        //{
-        //    return productTransactionRepository.GetAll().Where(w => w.StockId == stockId && w.ProductId == productId && w.TransactionTypeId <= 4).ToList();
-        //}
+        private string UploadedFile(Product product)
+        {
+            string uniqueFileName = product.ProductImage;
 
-        //private IEnumerable<ProductTransaction> GetOutcomingTransaction(int stockId, int productId)
-        //{
-        //    return productTransactionRepository.GetAll().Where(w => w.StockId == stockId && w.ProductId == productId && w.TransactionTypeId >= 5).ToList();
-        //}
-
-        //public StockProductViewModel GetProductStock(ProductTransaction productTransaction)
-        //{
-        //    var income = GetIncomingTransaction(productTransaction.StockId, productTransaction.ProductId).Count();
-        //}
+            if (product.ProductImageFile != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "img\\uploaded\\products");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + product.ProductImageFile.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    product.ProductImageFile.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace ModulosUsuario.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                product = productService.CreateOrEditProduct(product);
+                productService.CreateOrEditProduct(product);
                 return RedirectToAction("Index");
             }
 

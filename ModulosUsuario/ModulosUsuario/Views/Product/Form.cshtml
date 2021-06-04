@@ -1,19 +1,20 @@
 ﻿@model ModulosUsuario.Models.Product
 @{ ViewData["Title"] = Model.ProductId == 0 ? "Criar Produto" : "Editar Produto"; }
-@{ 
-    var title = "Editar";
+@{ var title = "Editar";
     if (Model.ProductId == 0)
     {
         title = "Criar";
         Model.Active = true;
-    }
-}
+    } }
+
+<script src="~/js/views/product.js"></script>
+
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">@title Produto</h3>
     </div>
 
-    <form asp-controller="Product" asp-action="CreateOrEdit" asp-antiforgery="true" method="post">
+    <form asp-controller="Product" asp-action="CreateOrEdit" asp-antiforgery="true" method="post" enctype="multipart/form-data">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -25,6 +26,7 @@
                     <div class="col-md-12">
                         @Html.HiddenFor(h => h.ProductId)
                         @Html.HiddenFor(h => h.Active)
+                        @Html.HiddenFor(h => h.ProductImage)
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label asp-for="SKU"></label>
@@ -59,10 +61,18 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label asp-for="Description"></label>
                                 <input asp-for="Description" class="form-control" placeholder="Informe a Descrição do Produto" />
                                 <span asp-validation-for="Description" class="field-validation-valid text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="ProductImageFile" class="control-label"></label>
+                                <div class="custom-file">
+                                    <input asp-for="ProductImageFile" class="custom-file-input" id="customFile" onchange="productController.productImageOnChange(this)">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                </div>
+                                <span asp-validation-for="ProductImageFile" class="text-danger"></span>
                             </div>
                         </div>
                     </div>

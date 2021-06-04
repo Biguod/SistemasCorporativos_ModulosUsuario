@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModulosUsuario.Models
 {
@@ -11,7 +13,7 @@ namespace ModulosUsuario.Models
 
         [Required]
         [Display(Name = "SKU")]
-        public string SKU { get; set; } // Sepa string ?
+        public string SKU { get; set; }
 
         [Required]
         [Display(Name = "Descrição")]
@@ -40,6 +42,13 @@ namespace ModulosUsuario.Models
 
         [Required]
         public bool Active { get; set; }
+
+        [Display(Name = "Imagem do Produto")]
+        public string ProductImage { get; set; }
+
+        [Display(Name = "Imagem do Produto")]
+        [NotMapped]
+        public IFormFile ProductImageFile { get; set; }
 
         public virtual UnityType UnityType { get; set; }
 
