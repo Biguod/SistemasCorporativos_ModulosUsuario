@@ -1,6 +1,10 @@
 ﻿@model ModulosUsuario.Models.ProductTransaction
 @{ ViewData["Title"] = "Nova Transação de Produto"; }
-
+@{
+    if (Model.UserId == 0)
+    {
+        Model.UserId = 1;
+    } }
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">Nova Transação de Produto</h3>
@@ -18,6 +22,7 @@
                     <div class="col-md-12">
                         @Html.HiddenFor(h => h.ProductTransactionId)
                         @Html.HiddenFor(h => h.StockId)
+                        @Html.HiddenFor(h => h.UserId)
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <label asp-for="Product">Produto</label>

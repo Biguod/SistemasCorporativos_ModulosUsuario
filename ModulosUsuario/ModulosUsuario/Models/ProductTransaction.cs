@@ -25,8 +25,12 @@ namespace ModulosUsuario.Models
         [Required]
         public int StockId { get; set; }
 
-        public Product Product { get; set; }
-        public Stock Stock { get; set; }
+        [Required]
+        public int UserId { get; set; }
+
+        public virtual Product Product { get; set; }
+        public virtual Stock Stock { get; set; }
         public virtual TransactionType TransactionType { get; set; }
+        public virtual User User { get; set; }
     }
 }
