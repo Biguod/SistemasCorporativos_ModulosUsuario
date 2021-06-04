@@ -15,5 +15,7 @@ namespace ModulosUsuario.Interfaces.Repositories
 
         IEnumerable<ProductTransaction> GetByStockId(int stockId);
 
+        IEnumerable<SaleListViewModel> GetAllProductsForSale();
+
     }
 }

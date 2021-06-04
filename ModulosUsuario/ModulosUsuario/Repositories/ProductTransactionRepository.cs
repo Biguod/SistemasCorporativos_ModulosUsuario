@@ -58,5 +58,23 @@ namespace ModulosUsuario.Repositories
                 .Include(i => i.TransactionType)
                 .ToList();
         }
+
+        public IEnumerable<SaleListViewModel> GetAllProductsForSale()
+        {
+            return context.ProductTransaction
+                .Include(i => i.TransactionType)
+                .Where(w => w.Product.Active)
+                .Select(pt => new { pt.ProductId, pt.StockId, pt.TransactionType, pt.Quantity, pt.UnityValue, pt.Product.Name, pt.Product.ProductImage })
+                .GroupBy(x => new { x.ProductId, x.StockId, x.Name, x.ProductImage })
+                .Select(g => new SaleListViewModel
+                {
+                    ProductId = g.Key.ProductId,
+                    StockId = g.Key.StockId,
+                    ProductName = g.Key.Name,
+                    ProductImage = g.Key.ProductImage,
+                    StockQuantity = g.Sum(s => s.TransactionType.IsIncoming ? s.Quantity : 0) - g.Sum(s => !s.TransactionType.IsIncoming ? s.Quantity : 0),
+                    AverageCost = g.Sum(s => s.TransactionType.IsIncoming ? s.Quantity * s.UnityValue : 0) / g.Sum(s => s.TransactionType.IsIncoming ? s.Quantity : 0)
+                });
+        }
     }
 }
