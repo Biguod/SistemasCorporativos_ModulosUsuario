@@ -9,7 +9,7 @@ namespace ModulosUsuario.Repositories
     public class BranchRepository : IBranchRepository
     {
         private readonly DatabaseContext context;
-        public BranchRepository(DatabaseContext context) 
+        public BranchRepository(DatabaseContext context)
         {
             this.context = context;
         }
@@ -43,7 +43,7 @@ namespace ModulosUsuario.Repositories
 
         public Branch GetByDescription(string description)
         {
-            var branch = context.Branch.Find(description);
+            var branch = context.Branch.Where(w => w.Description.ToUpper() == description.ToUpper()).FirstOrDefault();
             if (branch == null)
                 branch = new Branch();
             return branch;

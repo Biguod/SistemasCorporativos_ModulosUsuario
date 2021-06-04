@@ -33,7 +33,7 @@ namespace ModulosUsuario.Services
         public Branch GetBranchById(int branchId)
         {
             var branch = branchRepository.GetById(branchId);
-            
+
             return branch;
         }
 
@@ -48,7 +48,7 @@ namespace ModulosUsuario.Services
         {
             try
             {
-                if (branch.BranchId == 0 && branch.Description.ToUpper() == GetBranchByDescription(branch.Description).Description.ToUpper())
+                if (branch.BranchId == 0 && GetBranchByDescription(branch.Description).BranchId == 0)
                 {
                     return CreateBranch(branch);
                 }
@@ -57,7 +57,7 @@ namespace ModulosUsuario.Services
             catch (Exception ex)
             {
                 throw ex;
-            }            
+            }
         }
 
         private Branch CreateBranch(Branch branch)
