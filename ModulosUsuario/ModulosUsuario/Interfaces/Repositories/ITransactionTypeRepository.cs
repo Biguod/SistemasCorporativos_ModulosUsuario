@@ -7,5 +7,6 @@ namespace ModulosUsuario.Interfaces.Repositories
     {
         IEnumerable<TransactionType> GetAll();
         TransactionType GetTransactionTypeById(int transactionTypeId);
+        TransactionType GetTransactionTypeByDescription(string transactionTypeDescription);
     }
 }

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<SaleListViewModel>
+
+@{ ViewData["Title"] = "Comprar"; }
+
+<div class="d-inline-flex">
+
+    @foreach (var item in Model)
+    {
+        <div class="card" style="width: 18rem;">
+            <img src="~/img/uploaded/products/@item.ProductImage" class="card-img-top align-self-center w-auto mt-4" alt="..." height="200">
+            <div class="card-body">
+                <h5 class="card-title">@item.ProductName</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Preço:</strong> R$ @item.AverageCost.ToString("0.00")</li>
+                <li class="list-group-item"><strong>Qtd em Estoque:</strong> @item.StockQuantity</li>
+            </ul>
+            <div class="card-body">
+                <a href="@Url.Action("Details", "Sale", new { productId = item.ProductId, stockId = item.StockId })" class="btn btn-sm btn-outline-success float-right">
+                    <i class="fas fa-cart-plus"></i><span>  Comprar</span>
+                </a>
+            </div>
+        </div>
+    }
+
+</div>

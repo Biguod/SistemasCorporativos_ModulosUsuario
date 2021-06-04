@@ -1,5 +1,4 @@
-﻿
-using ModulosUsuario.Models;
+﻿using ModulosUsuario.Models;
 using System.Collections.Generic;
 
 namespace ModulosUsuario.Interfaces.Services
@@ -16,5 +15,6 @@ namespace ModulosUsuario.Interfaces.Services
         ToolsTransaction GetToolTransaction(int toolsTransactionId);
         MaterialTransaction GetMaterialTransaction(int materialTransactionId);
         TransactionType GetTransactionTypeById(int transactionTypeId);
+        TransactionType GetTransactionTypeByDescription(string transactionTypeDescription);
     }
 }

@@ -24,5 +24,9 @@ namespace ModulosUsuario.Repositories
             return context.TransactionType.Find(transactionTypeId);
         }
 
+        public TransactionType GetTransactionTypeByDescription(string transactionTypeDescription)
+        {
+            return context.TransactionType.Where(w => w.Description == transactionTypeDescription).FirstOrDefault();
+        }
     }
 }

@@ -1,0 +1,75 @@
+﻿@model ModulosUsuario.Models.SaleViewModel
+@{ ViewData["Title"] = Model.Product.Name; }
+@{ if (Model.UserId == 0)
+    {
+        Model.UserId = 1;
+    } }
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">@Model.Product.Name</h3>
+    </div>
+
+    <form asp-controller="Sale" asp-action="ReserveProduct" asp-antiforgery="true" method="post">
+        <div class="card">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="~/img/uploaded/products/@Model.Product.ProductImage" class="card-img" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        @Html.HiddenFor(h => h.StockId)
+                        @Html.HiddenFor(h => h.ProductId)
+                        @Html.HiddenFor(h => h.AverageCost)
+                        @Html.HiddenFor(h => h.UserId)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="card-title">@Model.Product.Name</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="card-text">@Model.Product.Description.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="card-text text-bold text-success">Preço: R$@Model.AverageCost.ToString("0.00")</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="card-text text-bold text-warning">Quantidade em Estoque: @Model.StockQuantity</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group d-flex">
+                                <div class="col-md-6">
+                                    <label asp-for="Quantity"></label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="Quantity" type="number" class="form-control" placeholder="Informe a quantidade" />
+                                    <span asp-validation-for="Quantity" class="field-validation-valid text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="text-align:end">
+                            <a asp-action="Index" class="btn btn-dark mr-2">Retornar</a>
+                            <button class="btn btn-sm btn-success" type="submit">
+                                <i class="fas fa-cart-plus"></i><span>  Comprar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

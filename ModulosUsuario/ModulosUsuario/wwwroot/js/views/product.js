@@ -7,8 +7,7 @@
             deleteModal.setAttribute("action", action);
         },
         productImageOnChange: function (e) {
-            debugger
-            var fileName = $(e).val().split("\").pop();
+            var fileName = $(e).val().split("\\").pop();
             $(e).siblings(".custom-file-label").addClass("selected").html(fileName);
         }
     }

@@ -35,6 +35,7 @@ namespace ModulosUsuario
             services.AddScoped<IBranchService, BranchService>();
             services.AddScoped<IStockService, StockService>();
             services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<ISaleService, SaleService>();
 
             //repositories
             services.AddScoped<IUserRepository, UserRepository>();

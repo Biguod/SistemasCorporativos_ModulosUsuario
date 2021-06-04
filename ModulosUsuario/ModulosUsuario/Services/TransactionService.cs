@@ -115,5 +115,14 @@ namespace ModulosUsuario.Services
             }
             return transactionType;
         }
+        public TransactionType GetTransactionTypeByDescription(string transactionTypeDescription)
+        {
+            var transactionType = transactionTypeRepository.GetTransactionTypeByDescription(transactionTypeDescription);
+            if (transactionType == null)
+            {
+                throw new ArgumentNullException();
+            }
+            return transactionType;
+        }
     }
 }
