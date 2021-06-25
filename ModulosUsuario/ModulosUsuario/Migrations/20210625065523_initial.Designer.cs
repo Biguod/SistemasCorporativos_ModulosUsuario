@@ -10,8 +10,8 @@ using ModulosUsuario.Contexts;
 namespace ModulosUsuario.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20210430051619_dataInsert")]
-    partial class dataInsert
+    [Migration("20210625065523_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -188,6 +188,9 @@ namespace ModulosUsuario.Migrations
                     b.Property<decimal>("PriceList")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ProductImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SKU")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -227,6 +230,9 @@ namespace ModulosUsuario.Migrations
                     b.Property<decimal>("UnityValue")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductTransactionId");
 
                     b.HasIndex("ProductId");
@@ -235,7 +241,42 @@ namespace ModulosUsuario.Migrations
 
                     b.HasIndex("TransactionTypeId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("ProductTransaction");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.Sale", b =>
+                {
+                    b.Property<int>("SaleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductTransactionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("SaleId");
+
+                    b.HasIndex("ProductTransactionId")
+                        .IsUnique();
+
+                    b.ToTable("Sale");
                 });
 
             modelBuilder.Entity("ModulosUsuario.Models.Stock", b =>
@@ -528,11 +569,30 @@ namespace ModulosUsuario.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ModulosUsuario.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Product");
 
                     b.Navigation("Stock");
 
                     b.Navigation("TransactionType");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.Sale", b =>
+                {
+                    b.HasOne("ModulosUsuario.Models.ProductTransaction", "ProductTransaction")
+                        .WithOne("Sale")
+                        .HasForeignKey("ModulosUsuario.Models.Sale", "ProductTransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductTransaction");
                 });
 
             modelBuilder.Entity("ModulosUsuario.Models.Stock", b =>
@@ -630,6 +690,11 @@ namespace ModulosUsuario.Migrations
             modelBuilder.Entity("ModulosUsuario.Models.Product", b =>
                 {
                     b.Navigation("ProductTransactions");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.ProductTransaction", b =>
+                {
+                    b.Navigation("Sale");
                 });
 
             modelBuilder.Entity("ModulosUsuario.Models.Tools", b =>

@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace ModulosUsuario.Migrations
 {
-    public partial class dataInsert : Migration
+    public partial class dataLoad : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,7 +21,9 @@ namespace ModulosUsuario.Migrations
                     { "Ajuste de Entrada", true },
                     { "Ajuste de Saída", false },
                     { "Devolução", true },
-                    { "Troca", false }
+                    { "Troca", false },
+                    { "Reserva", false },
+                    { "Reserva Cancelada", true }
             });
 
             migrationBuilder.InsertData(
@@ -35,6 +38,21 @@ namespace ModulosUsuario.Migrations
                     { "Unidade" }
             });
 
+            migrationBuilder.InsertData(
+               table: "UnityType",
+               columns: new[] { "Description" },
+               values: new object[,]
+               {
+                    { "Toneladas" }
+               });
+
+           migrationBuilder.InsertData(
+               table: "Users",
+               columns: new[] { "Login", "Password", "Email", "Name", "LastName", "BirthDate", "CPF", "Phone" },
+               values: new object[,]
+               {
+                    { "System", "System", "system@email.com", "System", "System", DateTime.Now, "57707526023", "99999999999" }
+               });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

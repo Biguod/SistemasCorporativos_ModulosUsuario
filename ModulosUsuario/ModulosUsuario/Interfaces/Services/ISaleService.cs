@@ -8,5 +8,7 @@ namespace ModulosUsuario.Interfaces.Services
         IEnumerable<SaleListViewModel> GetAllProducts();
         SaleViewModel GetProductForSaleById(int stockId, int productId);
         void ReserveProduct(SaleViewModel model);
+        void CancelReservedSale(int productTransactionId);
+        ShopCartViewModel GetCartByCustomer(int userId);
     }
 }

@@ -72,6 +72,11 @@ namespace ModulosUsuario.Contexts
                 .WithMany(tt => tt.ToolsTransactions)
                 .HasForeignKey(tt => tt.ToolId)
                 .IsRequired();
+
+
+            modelBuilder.Entity<Sale>()
+                .HasOne(p => p.ProductTransaction)
+                .WithOne(pt => pt.Sale);
         }
 
         public DbSet<User> Users { get; set; }
@@ -89,6 +94,7 @@ namespace ModulosUsuario.Contexts
         public DbSet<ToolsTransaction> ToolsTransaction { get; set; }
         public DbSet<MaterialTransaction> MaterialTransaction { get; set; }
         public DbSet<TransactionType> TransactionType { get; set; }
+        public DbSet<Sale> Sale { get; set; }
     }
 }
 

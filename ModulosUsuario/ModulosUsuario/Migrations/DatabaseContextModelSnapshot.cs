@@ -244,6 +244,39 @@ namespace ModulosUsuario.Migrations
                     b.ToTable("ProductTransaction");
                 });
 
+            modelBuilder.Entity("ModulosUsuario.Models.Sale", b =>
+                {
+                    b.Property<int>("SaleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductTransactionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("SaleId");
+
+                    b.HasIndex("ProductTransactionId")
+                        .IsUnique();
+
+                    b.ToTable("Sale");
+                });
+
             modelBuilder.Entity("ModulosUsuario.Models.Stock", b =>
                 {
                     b.Property<int>("StockId")
@@ -549,6 +582,17 @@ namespace ModulosUsuario.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ModulosUsuario.Models.Sale", b =>
+                {
+                    b.HasOne("ModulosUsuario.Models.ProductTransaction", "ProductTransaction")
+                        .WithOne("Sale")
+                        .HasForeignKey("ModulosUsuario.Models.Sale", "ProductTransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductTransaction");
+                });
+
             modelBuilder.Entity("ModulosUsuario.Models.Stock", b =>
                 {
                     b.HasOne("ModulosUsuario.Models.Branch", "Branch")
@@ -644,6 +688,11 @@ namespace ModulosUsuario.Migrations
             modelBuilder.Entity("ModulosUsuario.Models.Product", b =>
                 {
                     b.Navigation("ProductTransactions");
+                });
+
+            modelBuilder.Entity("ModulosUsuario.Models.ProductTransaction", b =>
+                {
+                    b.Navigation("Sale");
                 });
 
             modelBuilder.Entity("ModulosUsuario.Models.Tools", b =>

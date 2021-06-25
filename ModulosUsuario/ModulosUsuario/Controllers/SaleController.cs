@@ -37,5 +37,31 @@ namespace ModulosUsuario.Controllers
                 throw;
             }
         }
+
+        [HttpPost]
+        public ActionResult CancelProductReserved(int productTransactionId)
+        {
+            try
+            {
+                saleService.CancelReservedSale(productTransactionId);
+                return RedirectToAction("ShopCartIndex");
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
+        public IActionResult ShopCartIndex()
+        {
+            try
+            {
+                return View("~/Views/Sale/ShopCart/Index.cshtml", saleService.GetCartByCustomer(1)); //mudar aqui qnd ter o .User
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
     }
 }

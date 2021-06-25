@@ -49,6 +49,7 @@ namespace ModulosUsuario
             services.AddScoped<IToolsTransactionRepository, ToolsTransactionRepository>();
             services.AddScoped<IStockRepository, StockRepository>();
             services.AddScoped<ITransactionTypeRepository, TransactionTypeRepository>();
+            services.AddScoped<ISaleRepository, SaleRepository>();
 
             //database
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

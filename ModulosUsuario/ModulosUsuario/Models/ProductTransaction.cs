@@ -32,5 +32,6 @@ namespace ModulosUsuario.Models
         public virtual Stock Stock { get; set; }
         public virtual TransactionType TransactionType { get; set; }
         public virtual User User { get; set; }
+        public virtual Sale Sale { get; set; }
     }
 }

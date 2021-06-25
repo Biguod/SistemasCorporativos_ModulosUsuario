@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ModulosUsuario.Migrations
 {
-    public partial class initialcreate : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,8 @@ namespace ModulosUsuario.Migrations
                 {
                     TransactionTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsIncoming = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -136,7 +137,8 @@ namespace ModulosUsuario.Migrations
                     Unity = table.Column<int>(type: "int", nullable: false),
                     UnityTypeId = table.Column<int>(type: "int", nullable: false),
                     PriceList = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Active = table.Column<bool>(type: "bit", nullable: false)
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    ProductImage = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -232,7 +234,6 @@ namespace ModulosUsuario.Migrations
                     MaterialId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     UnityValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TransactionTypeId = table.Column<int>(type: "int", nullable: false),
                     StockId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -268,9 +269,9 @@ namespace ModulosUsuario.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     UnityValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TransactionTypeId = table.Column<int>(type: "int", nullable: false),
-                    StockId = table.Column<int>(type: "int", nullable: false)
+                    StockId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -292,6 +293,12 @@ namespace ModulosUsuario.Migrations
                         column: x => x.TransactionTypeId,
                         principalTable: "TransactionType",
                         principalColumn: "TransactionTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductTransaction_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -326,7 +333,6 @@ namespace ModulosUsuario.Migrations
                     ToolId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     UnityValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TransactionTypeId = table.Column<int>(type: "int", nullable: false),
                     StockId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -350,6 +356,30 @@ namespace ModulosUsuario.Migrations
                         column: x => x.TransactionTypeId,
                         principalTable: "TransactionType",
                         principalColumn: "TransactionTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sale",
+                columns: table => new
+                {
+                    SaleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductTransactionId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sale", x => x.SaleId);
+                    table.ForeignKey(
+                        name: "FK_Sale_ProductTransaction_ProductTransactionId",
+                        column: x => x.ProductTransactionId,
+                        principalTable: "ProductTransaction",
+                        principalColumn: "ProductTransactionId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -399,6 +429,17 @@ namespace ModulosUsuario.Migrations
                 column: "TransactionTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductTransaction_UserId",
+                table: "ProductTransaction",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sale_ProductTransactionId",
+                table: "Sale",
+                column: "ProductTransactionId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Stock_BranchId",
                 table: "Stock",
                 column: "BranchId",
@@ -444,7 +485,7 @@ namespace ModulosUsuario.Migrations
                 name: "MaterialTransaction");
 
             migrationBuilder.DropTable(
-                name: "ProductTransaction");
+                name: "Sale");
 
             migrationBuilder.DropTable(
                 name: "ToolsLog");
@@ -459,28 +500,31 @@ namespace ModulosUsuario.Migrations
                 name: "Material");
 
             migrationBuilder.DropTable(
+                name: "ProductTransaction");
+
+            migrationBuilder.DropTable(
+                name: "Tools");
+
+            migrationBuilder.DropTable(
+                name: "Permissions");
+
+            migrationBuilder.DropTable(
                 name: "Product");
 
             migrationBuilder.DropTable(
                 name: "Stock");
 
             migrationBuilder.DropTable(
-                name: "Tools");
-
-            migrationBuilder.DropTable(
                 name: "TransactionType");
-
-            migrationBuilder.DropTable(
-                name: "Permissions");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Branch");
+                name: "UnityType");
 
             migrationBuilder.DropTable(
-                name: "UnityType");
+                name: "Branch");
         }
     }
 }
