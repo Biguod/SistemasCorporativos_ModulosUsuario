@@ -77,6 +77,8 @@ namespace ModulosUsuario.Contexts
             modelBuilder.Entity<Sale>()
                 .HasOne(p => p.ProductTransaction)
                 .WithOne(pt => pt.Sale);
+
+            modelBuilder.Entity<PaymentMethods>();
         }
 
         public DbSet<User> Users { get; set; }
@@ -95,6 +97,7 @@ namespace ModulosUsuario.Contexts
         public DbSet<MaterialTransaction> MaterialTransaction { get; set; }
         public DbSet<TransactionType> TransactionType { get; set; }
         public DbSet<Sale> Sale { get; set; }
+        public DbSet<PaymentMethods> PaymentMethods { get; set; }
     }
 }
 

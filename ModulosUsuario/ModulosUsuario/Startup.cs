@@ -36,6 +36,7 @@ namespace ModulosUsuario
             services.AddScoped<IStockService, StockService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<ISaleService, SaleService>();
+            services.AddScoped<IPaymentService, PaymentService>();
 
             //repositories
             services.AddScoped<IUserRepository, UserRepository>();
@@ -50,6 +51,7 @@ namespace ModulosUsuario
             services.AddScoped<IStockRepository, StockRepository>();
             services.AddScoped<ITransactionTypeRepository, TransactionTypeRepository>();
             services.AddScoped<ISaleRepository, SaleRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
 
             //database
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

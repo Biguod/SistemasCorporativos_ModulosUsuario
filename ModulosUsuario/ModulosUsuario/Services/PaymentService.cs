@@ -1,21 +1,32 @@
-﻿using ModulosUsuario.Models;
+﻿using ModulosUsuario.Interfaces.Repositories;
+using ModulosUsuario.Interfaces.Services;
+using ModulosUsuario.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ModulosUsuario.Services
 {
     public class PaymentService : IPaymentService
     {
+        public readonly IPaymentRepository paymentRepository;
+
+        public PaymentService(IPaymentRepository paymentRepository)
+        {
+            this.paymentRepository = paymentRepository;
+        }
 
         public bool CreditCardPayment(CreditCardViewModel creditCard)
         {
-            if(creditCard == null || creditCard.CardNumber.Length != 16 || creditCard.CVV.Length != 3 || creditCard.CardExpiryDate < DateTime.Now || creditCard.CreditCardFlag.CreditCardFlagId == 0)
+            if(creditCard == null || creditCard.CardNumber.Length != 16 || creditCard.CVV.Length != 3 || creditCard.CardExpiryDate < DateTime.Now)
             {
                 return false;
             }
             return true;
+        }
+
+        public IEnumerable<PaymentMethods> GetPaymentMethods()
+        {
+            return paymentRepository.GetAllPaymentMethods();
         }
     }
 }

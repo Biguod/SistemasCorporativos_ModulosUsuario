@@ -124,5 +124,9 @@ namespace ModulosUsuario.Services
             }
             return transactionType;
         }
+        public ProductTransaction UpdateProductTransaction(ProductTransaction productTransaction)
+        {
+            return productTransactionRepository.UpdateProductTransaction(productTransaction);
+        }
     }
 }

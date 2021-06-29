@@ -3,86 +3,43 @@
 
 <script src="~/js/views/sale.js"></script>
 
-
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">Meu Carrinho</h3>
     </div>
-
-    @*<form asp-controller="Sale" asp-action="ReserveProduct" asp-antiforgery="true" method="post">*@
-        @foreach (var product in Model.Products)
-        {
-<div class="card">
-    <div class="row">
-        <div class="col-md-4">
-            <img src="~/img/uploaded/products/@product.ProductTransaction.Product.ProductImage" class="card-img" alt="..." style="height: 20vh; width: auto;">
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                @Html.HiddenFor(h => product.ProductTransactionId)
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5 class="card-title">@product.ProductTransaction.Product.Name</h5>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p class="card-text">@product.ProductTransaction.Product.Description.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p class="card-text text-bold text-success">Quantidade: @product.Quantity</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p class="card-text text-bold text-success">Preço Total: R$@product.TotalPrice.ToString("0.00")</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <button deleteSaleId="@product.ProductTransactionId" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="saleController.deleteModalId(this)">
-                        <i class="fas fa-trash-alt"></i> Excluir
-                    </button>
-                </div>
+    <form asp-controller="Sale" asp-action="FinishSale" asp-antiforgery="true" method="post">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/Sale/ShopCart/_ProductsDetails.cshtml", Model)
             </div>
         </div>
-    </div>
-</div>}
-
-        @*<div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div style="text-align:end">
-                            <a asp-action="Index" class="btn btn-dark mr-2">Retornar</a>
-                            <button class="btn btn-sm btn-success" type="submit">
-                                <i class="fas fa-cart-plus"></i><span>  Comprar</span>
-                            </button>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/Sale/ShopCart/_AddressUser.cshtml", Model)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/Sale/ShopCart/_Payment.cshtml", Model)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div style="text-align:end">
+                                    <a asp-action="Index" class="btn btn-dark mr-2">Retornar</a>
+                                    <button class="btn btn-success" type="submit" name="submit" formmethod="post" >
+                                        <i class="fas fa-cart-plus"></i><span>  Finalizar Compra</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>*@
-</div>
-
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Confirmar Deleção</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                Tem certeza que deseja excluir esse pedido?
-            </div>
-            <div class="modal-footer">
-                <form action="" id="deleteModalAction" asp-antiforgery="true" method="post">
-                    <input type="submit" class="btn bg-danger" value="Excluir" />
-                </form>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>

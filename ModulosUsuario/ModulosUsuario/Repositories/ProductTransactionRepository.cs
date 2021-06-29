@@ -76,5 +76,11 @@ namespace ModulosUsuario.Repositories
                     AverageCost = g.Sum(s => s.TransactionType.IsIncoming ? s.Quantity * s.UnityValue : 0) / g.Sum(s => s.TransactionType.IsIncoming ? s.Quantity : 0)
                 });
         }
+        public ProductTransaction UpdateProductTransaction(ProductTransaction productTransaction)
+        {
+            context.Update(productTransaction);
+            context.SaveChanges();
+            return productTransaction;
+        }
     }
 }

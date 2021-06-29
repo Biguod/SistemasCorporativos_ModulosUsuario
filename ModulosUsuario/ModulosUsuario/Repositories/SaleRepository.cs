@@ -32,7 +32,7 @@ namespace ModulosUsuario.Repositories
         {
             context.Update(sale);
             context.SaveChanges();
-            return sale;
+            return GetById(sale.SaleId);
         }
 
         public void Delete(Sale sale)
@@ -46,6 +46,7 @@ namespace ModulosUsuario.Repositories
             var sale = context.Sale
                 .Where(w => w.SaleId == saleId)
                 .Include(i => i.ProductTransaction)
+                .Include(n => n.PaymentMethod)
                 .Include("ProductTransaction.User")
                 .Include("ProductTransaction.Product")
                 .Include("ProductTransaction.Stock")
@@ -61,6 +62,7 @@ namespace ModulosUsuario.Repositories
             var sale = context.Sale
                 .Where(w => w.ProductTransactionId == productTransactionId)
                 .Include(i => i.ProductTransaction)
+                .Include(n => n.PaymentMethod)
                 .Include("ProductTransaction.User")
                 .Include("ProductTransaction.Product")
                 .Include("ProductTransaction.Stock")

@@ -16,5 +16,6 @@ namespace ModulosUsuario.Interfaces.Services
         MaterialTransaction GetMaterialTransaction(int materialTransactionId);
         TransactionType GetTransactionTypeById(int transactionTypeId);
         TransactionType GetTransactionTypeByDescription(string transactionTypeDescription);
+        ProductTransaction UpdateProductTransaction(ProductTransaction productTransaction);
     }
 }

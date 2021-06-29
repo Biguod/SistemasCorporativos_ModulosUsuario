@@ -6,18 +6,22 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
 
-        @*<li class="nav-item d-none d-sm-inline-block">
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                </form>
-            </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a asp-controller="Sale" asp-action="ShopCartIndex" class="nav-link" title="Carrinho"><i class="nav-icon fas fa-shopping-cart"></i></a>
+        </li>
 
-            <li class="nav-item d-none d-sm-inline-block">
-                <a asp-area="Identity" asp-page="/Account/Login" class="nav-link">Login</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a asp-area="Identity" asp-page="/Account/Register" class="nav-link">Register</a>
-            </li>*@
+        @*<li class="nav-item d-none d-sm-inline-block">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
+        </li>
+
+        <li class="nav-item d-none d-sm-inline-block">
+            <a asp-area="Identity" asp-page="/Account/Login" class="nav-link">Login</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a asp-area="Identity" asp-page="/Account/Register" class="nav-link">Register</a>
+        </li>*@
     </ul>
 
     <!-- Right navbar links -->

@@ -10,8 +10,8 @@ using ModulosUsuario.Contexts;
 namespace ModulosUsuario.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20210625065523_initial")]
-    partial class initial
+    [Migration("20210629013655_insertInitialData")]
+    partial class insertInitialData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -148,6 +148,22 @@ namespace ModulosUsuario.Migrations
                     b.ToTable("MaterialTransaction");
                 });
 
+            modelBuilder.Entity("ModulosUsuario.Models.PaymentMethods", b =>
+                {
+                    b.Property<int>("PaymentMethodId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PaymentMethodId");
+
+                    b.ToTable("PaymentMethods");
+                });
+
             modelBuilder.Entity("ModulosUsuario.Models.Permissions", b =>
                 {
                     b.Property<int>("PermissionId")
@@ -256,8 +272,14 @@ namespace ModulosUsuario.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DeliveryAddressUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("PaymentMethodId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductTransactionId")
                         .HasColumnType("int");
@@ -272,6 +294,8 @@ namespace ModulosUsuario.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("SaleId");
+
+                    b.HasIndex("PaymentMethodId");
 
                     b.HasIndex("ProductTransactionId")
                         .IsUnique();
@@ -586,11 +610,17 @@ namespace ModulosUsuario.Migrations
 
             modelBuilder.Entity("ModulosUsuario.Models.Sale", b =>
                 {
+                    b.HasOne("ModulosUsuario.Models.PaymentMethods", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId");
+
                     b.HasOne("ModulosUsuario.Models.ProductTransaction", "ProductTransaction")
                         .WithOne("Sale")
                         .HasForeignKey("ModulosUsuario.Models.Sale", "ProductTransactionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("PaymentMethod");
 
                     b.Navigation("ProductTransaction");
                 });

@@ -80,9 +80,9 @@ namespace ModulosUsuario.Services
         {
             saleRepository.Create(sale);
         }
-        private void UpdateSale(Sale sale)
+        private Sale UpdateSale(Sale sale)
         {
-            saleRepository.Update(sale);
+            return saleRepository.Update(sale);
         }
 
         public void CancelReservedSale(int productTransactionId)
@@ -108,15 +108,40 @@ namespace ModulosUsuario.Services
             UpdateSale(sale);
         }
 
-        public ShopCartViewModel GetCartByCustomer(int customerId)
+        public List<Sale> FinishSale(ShopCartViewModel model)
+        {
+            var sales = new List<Sale>();
+            foreach (var product in model.Products)
+            {
+                var productTransaction = transactionService.GetProductTransaction(product.ProductTransactionId);
+
+                productTransaction.TransactionTypeId = transactionService.GetTransactionTypeByDescription("Venda").TransactionTypeId;
+
+                transactionService.UpdateProductTransaction(productTransaction);
+
+                var sale = saleRepository.GetByProductTransactionId(product.ProductTransactionId);
+                sale.ExpirationDate = null;
+                sale.Status = "Pagamento Finalizado";
+                sale.DeliveryAddressUserId = model.AddressUserId;
+                sale.PaymentMethodId = model.PaymentMethodId;
+
+                sale = UpdateSale(sale);
+
+                sales.Add(sale);
+            }
+            return sales;
+        }
+
+        public ShopCartViewModel GetCartByCustomer(User customer)
         {
             ///pegar da sale onde status é reservado e userid é o cara
             ///
-            var salesByCustomer = saleRepository.GetAllReservedByUserId(customerId);
+            var salesByCustomer = saleRepository.GetAllReservedByUserId(customer.UserId);
 
             return new ShopCartViewModel
             {
                 Products = salesByCustomer,
+                User = customer,
                 TotalPrice = salesByCustomer.Sum(s => s.TotalPrice)
             };
         }

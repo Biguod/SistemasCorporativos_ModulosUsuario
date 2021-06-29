@@ -1,0 +1,57 @@
+﻿@model ModulosUsuario.Models.ShopCartViewModel
+
+@if (Model.User.Addresses != null)
+{
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="card-title">Endereço de Entrega</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label asp-for="AddressUserId">Selecione o Endereço de Entrega</label>
+                @Html.DropDownList("AddressUserId", (IEnumerable<SelectListItem>)ViewBag.UserAdresses, null, new { @class = "form-control", onChange = "saleController.fillUseraddress()" })
+                <span asp-validation-for="AddressUserId" class="field-validation-valid text-danger"></span>
+            </div>
+        </div>
+        @for (int i = 0; i < Model.User.Addresses.Count; i++)
+        {
+            var addressId = "addressId" + Model.User.Addresses[i].AddressId;
+            <div class="row addressDetails" hidden="hidden" id=@addressId>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-7">
+                            <p class="card-text"><strong>Rua: </strong> @Model.User.Addresses[i].Street</p>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <p class="card-text"><strong>Número: </strong> @Model.User.Addresses[i].Number</p>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <p class="card-text"><strong>Bairro: </strong> @Model.User.Addresses[i].District</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <p class="card-text"><strong>CEP: </strong> @Model.User.Addresses[i].PostalCode</p>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <p class="card-text"><strong>Cidade: </strong> @Model.User.Addresses[i].City</p>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <p class="card-text"><strong>Estado: </strong> @Model.User.Addresses[i].State</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        saleController.fillUseraddress();
+    });
+</script>

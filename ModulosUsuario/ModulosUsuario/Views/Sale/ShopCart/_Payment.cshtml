@@ -1,0 +1,95 @@
+﻿@model ModulosUsuario.Models.ShopCartViewModel
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="card-title">Método de Pagamento</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label asp-for="PaymentMethodId">Selecione o Método de Pagamento</label>
+                @Html.DropDownList("PaymentMethodId", (IEnumerable<SelectListItem>)ViewBag.PaymentMethods, null, new { @class = "form-control", onChange = "saleController.fillPayment()" })
+                <span asp-validation-for="PaymentMethodId" class="field-validation-valid text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row paymentMethodsDetails" hidden="hidden" id="paymentMethodId1">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.CreditCard.CardNumber"></label>
+                        <input asp-for="@Model.CreditCard.CardNumber" class="form-control" />
+                        <span asp-validation-for="@Model.CreditCard.CardNumber" class="field-validation-valid text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label asp-for="@Model.CreditCard.CVV"></label>
+                        <input asp-for="@Model.CreditCard.CVV" class="form-control" type="number" />
+                        <span asp-validation-for="@Model.CreditCard.CVV" class="field-validation-valid text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.CreditCard.CreditCardOwner"></label>
+                        <input asp-for="@Model.CreditCard.CreditCardOwner" class="form-control" />
+                        <span asp-validation-for="@Model.CreditCard.CreditCardOwner" class="field-validation-valid text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label asp-for="@Model.CreditCard.CardExpiryDate"></label>
+                        <input asp-for="@Model.CreditCard.CardExpiryDate" class="form-control" />
+                        <span asp-validation-for="@Model.CreditCard.CardExpiryDate" class="field-validation-valid text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row paymentMethodsDetails" hidden="hidden" id="paymentMethodId2">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>CNPJ:</strong> 69.367.424/0001-95</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Empresa:</strong> Supermercado KODEHEALERE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row paymentMethodsDetails" hidden="hidden" id="paymentMethodId3">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p><strong>Banco:</strong> Itaú</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p><strong>Agência:</strong> 0001-2</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p><strong>Conta:</strong> 4569872-1</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p><strong>Empresa:</strong> Supermercado KODEHEALERE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row paymentMethodsDetails" hidden="hidden" id="paymentMethodId4">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            <strong>Código de Barras:</strong> 123456789012   555444332221   568754456745
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            saleController.fillPayment();
+        });
+    </script>

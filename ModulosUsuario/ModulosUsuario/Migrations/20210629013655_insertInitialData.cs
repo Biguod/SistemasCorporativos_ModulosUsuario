@@ -3,15 +3,15 @@ using System;
 
 namespace ModulosUsuario.Migrations
 {
-    public partial class dataLoad : Migration
+    public partial class insertInitialData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
-                table: "TransactionType",
-                columns: new[] { "Description", "IsIncoming" },
-                values: new object[,]
-                {
+               table: "TransactionType",
+               columns: new[] { "Description", "IsIncoming" },
+               values: new object[,]
+               {
                     { "Compra", true },
                     { "Venda", false },
                     { "Perda", false },
@@ -24,7 +24,7 @@ namespace ModulosUsuario.Migrations
                     { "Troca", false },
                     { "Reserva", false },
                     { "Reserva Cancelada", true }
-            });
+           });
 
             migrationBuilder.InsertData(
                 table: "UnityType",
@@ -46,13 +46,31 @@ namespace ModulosUsuario.Migrations
                     { "Toneladas" }
                });
 
-           migrationBuilder.InsertData(
-               table: "Users",
-               columns: new[] { "Login", "Password", "Email", "Name", "LastName", "BirthDate", "CPF", "Phone" },
-               values: new object[,]
-               {
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Login", "Password", "Email", "Name", "LastName", "BirthDate", "CPF", "Phone" },
+                values: new object[,]
+                {
                     { "System", "System", "system@email.com", "System", "System", DateTime.Now, "57707526023", "99999999999" }
-               });
+                });
+            migrationBuilder.InsertData(
+                table: "AddressUser",
+                columns: new[] { "UserId", "Street", "Number", "PostalCode", "State", "City", "District" },
+                values: new object[,]
+                {
+                { 1, "System Street", "123", "80070060", "Paraná", "Curitiba", "Centro" }
+                });
+
+            migrationBuilder.InsertData(
+            table: "PaymentMethods",
+            columns: new[] { "Description" },
+            values: new object[,]
+            {
+                { "Cartão de crédito" },
+                { "PIX" },
+                { "Transferência Bancária" },
+                { "Boleto" }
+            });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

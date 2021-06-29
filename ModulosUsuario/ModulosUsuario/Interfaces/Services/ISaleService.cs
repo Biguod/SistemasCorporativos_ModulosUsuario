@@ -9,6 +9,7 @@ namespace ModulosUsuario.Interfaces.Services
         SaleViewModel GetProductForSaleById(int stockId, int productId);
         void ReserveProduct(SaleViewModel model);
         void CancelReservedSale(int productTransactionId);
-        ShopCartViewModel GetCartByCustomer(int userId);
+        ShopCartViewModel GetCartByCustomer(User user);
+        List<Sale> FinishSale(ShopCartViewModel model);
     }
 }

@@ -3,13 +3,15 @@ using ModulosUsuario.Interfaces.Repositories;
 using ModulosUsuario.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace ModulosUsuario.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private readonly DatabaseContext context;
-        public UserRepository(DatabaseContext context) 
+        public UserRepository(DatabaseContext context)
         {
             this.context = context;
         }
@@ -46,13 +48,17 @@ namespace ModulosUsuario.Repositories
 
         public User GetById(int userId)
         {
-            var user = context.Users.Find(userId);
-            if(user != null)
-                context.Entry(user).Collection(c => c.Addresses).Load();
-            else
+            var user = context.Users
+                    .Where(w => w.UserId == userId)
+                    .Include(i => i.Addresses)
+                    .FirstOrDefault();
+
+            if (user == null)
                 user = new User();
+
             if (user.Addresses == null)
                 user.Addresses = new List<AddressUser>();
+
             return user;
         }
     }
